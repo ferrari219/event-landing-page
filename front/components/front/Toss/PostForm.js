@@ -73,11 +73,7 @@ const PostForm = () => {
     if (!terms) {
       return setTermsError(true);
     }
-    return dispatch({
-      type: ADD_POST,
-      // data: { applyName, birth, phone, address, content },
-      data: formData,
-    });
+    return dispatch(ADD_POST(formData));
   }, [applyName, birth, phone, address, content, terms, imagePaths]);
 
   useEffect(() => {

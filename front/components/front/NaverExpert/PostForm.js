@@ -39,17 +39,11 @@ const PostForm = () => {
     [].forEach.call(e.target.files, (f) => {
       imageFormData.append('image', f);
     });
-    dispatch({
-      type: UPLOAD_IMAGES,
-      data: imageFormData,
-    });
+    dispatch(UPLOAD_IMAGES(imageFormData));
   }, []);
   const onRemoveImage = useCallback(
     (index) => () => {
-      dispatch({
-        type: REMOVE_IMAGE,
-        data: index,
-      });
+      dispatch(REMOVE_IMAGE(index));
     },
     []
   );

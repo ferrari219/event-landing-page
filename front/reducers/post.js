@@ -41,7 +41,7 @@ const postSlice = createSlice({
         state.loadPostsDone = true;
         state.mainPosts.concat(action.payload);
       })
-      .addCase(LOAD_POSTS.rejected, (state) => {
+      .addCase(LOAD_POSTS.rejected, (state, action) => {
         state.loadPostsLoading = false;
         state.loadPostsError = action.payload;
       })
@@ -56,7 +56,7 @@ const postSlice = createSlice({
         state.mainPosts.unshift(action.payload);
         state.imagePaths = [];
       })
-      .addCase(ADD_POST.rejected, (state) => {
+      .addCase(ADD_POST.rejected, (state, action) => {
         state.addPostLoading = false;
         state.addPostError = action.payload;
       })
@@ -70,7 +70,7 @@ const postSlice = createSlice({
         state.uploadImagesDone = true;
         state.imagePaths = action.payload;
       })
-      .addCase(UPLOAD_IMAGES.rejected, (state) => {
+      .addCase(UPLOAD_IMAGES.rejected, (state, action) => {
         state.uploadImagesLoading = false;
         state.uploadImagesError = action.payload;
       })

@@ -19,10 +19,7 @@ const reset = () => {
 
   const onTempPasswordMail = useCallback(() => {
     setEmailError(false);
-    dispatch({
-      type: SEND_MAIL,
-      data: { email },
-    });
+    dispatch(SEND_MAIL({ email }));
   }, [email]);
 
   const [tempPassword, onChangeTempPassword] = UseInput('');
@@ -41,14 +38,13 @@ const reset = () => {
   );
 
   const onNewPassword = useCallback(() => {
-    dispatch({
-      type: RESET_PASSWORD,
-      data: {
+    dispatch(
+      RESET_PASSWORD({
         email,
         tempPassword,
         newPassword,
-      },
-    });
+      })
+    );
   }, [email, tempPassword, newPassword]);
 
   return (

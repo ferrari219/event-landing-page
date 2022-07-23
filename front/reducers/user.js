@@ -43,7 +43,7 @@ const userSlice = createSlice({
         state.signUpLoading = false;
         state.signUpDone = true;
       })
-      .addCase(SIGN_UP.rejected, (state) => {
+      .addCase(SIGN_UP.rejected, (state, action) => {
         state.signUpLoading = false;
         state.signUpError = action.payload;
       })
@@ -56,7 +56,7 @@ const userSlice = createSlice({
         state.logInLoading = false;
         state.logInDone = true;
       })
-      .addCase(LOG_IN.rejected, (state) => {
+      .addCase(LOG_IN.rejected, (state, action) => {
         state.logInLoading = false;
         state.logInError = action.payload;
       })
@@ -69,7 +69,7 @@ const userSlice = createSlice({
         state.logOutLoading = false;
         state.logOutDone = true;
       })
-      .addCase(LOG_OUT.rejected, (state) => {
+      .addCase(LOG_OUT.rejected, (state, action) => {
         state.logOutLoading = false;
         state.logOutError = action.payload;
       })
@@ -82,7 +82,7 @@ const userSlice = createSlice({
         state.sendMailLoading = false;
         state.sendMailDone = true;
       })
-      .addCase(SEND_MAIL.rejected, (state) => {
+      .addCase(SEND_MAIL.rejected, (state, action) => {
         state.sendMailLoading = false;
         state.sendMailError = action.payload;
       })
@@ -95,7 +95,7 @@ const userSlice = createSlice({
         state.resetPasswordLoading = false;
         state.resetPasswordDone = true;
       })
-      .addCase(RESET_PASSWORD.rejected, (state) => {
+      .addCase(RESET_PASSWORD.rejected, (state, action) => {
         state.resetPasswordLoading = false;
         state.resetPasswordError = action.payload;
       })

@@ -11,9 +11,9 @@ const signup = () => {
   const { signUpError } = useSelector((state) => state.user);
 
   const [userid, onChangeuserid, setuserid] = UseInput('admin');
-  const [password, onChangePassword, setpassword] = UseInput('');
-  const [email, onChangeEmail, setEmail] = UseInput('');
-  const [passwordCheck, setPasswordCheck] = useState('');
+  const [password, onChangePassword, setpassword] = UseInput('1');
+  const [email, onChangeEmail, setEmail] = UseInput('a@a.com');
+  const [passwordCheck, setPasswordCheck] = useState('1');
   const [passwordError, setPasswordError] = useState(false);
 
   const onChangePasswordCheck = useCallback(
@@ -25,14 +25,13 @@ const signup = () => {
   );
 
   const onSignUp = useCallback(() => {
-    dispatch({
-      type: SIGN_UP,
-      data: {
+    dispatch(
+      SIGN_UP({
         userid: 'admin',
         email,
         password,
-      },
-    });
+      })
+    );
   }, [userid, password, email]);
 
   return (
