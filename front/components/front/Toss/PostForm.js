@@ -4,13 +4,9 @@ import { css } from '@emotion/react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { baseURL } from 'sagas';
+import { baseURL } from 'config/config';
 import UseInput from 'hook/UseInput';
-import {
-  ADD_POST_REQUEST,
-  REMOVE_IMAGE,
-  UPLOAD_IMAGES_REQUEST,
-} from 'reducers/post';
+import { ADD_POST, REMOVE_IMAGE, UPLOAD_IMAGES } from 'actions/post';
 import Terms from 'components/front/NaverExpert/common/Terms';
 import { useMobile } from 'hook/useIsMobile';
 import theme from 'assets/styles/theme';
@@ -43,17 +39,11 @@ const PostForm = () => {
     [].forEach.call(e.target.files, (f) => {
       imageFormData.append('image', f);
     });
-    dispatch({
-      type: UPLOAD_IMAGES_REQUEST,
-      data: imageFormData,
-    });
+    dispatch(UPLOAD_IMAGES(imageFormData));
   }, []);
   const onRemoveImage = useCallback(
     (index) => () => {
-      dispatch({
-        type: REMOVE_IMAGE,
-        data: index,
-      });
+      dispatch(REMOVE_IMAGE(index));
     },
     []
   );
@@ -84,7 +74,7 @@ const PostForm = () => {
       return setTermsError(true);
     }
     return dispatch({
-      type: ADD_POST_REQUEST,
+      type: ADD_POST,
       // data: { applyName, birth, phone, address, content },
       data: formData,
     });

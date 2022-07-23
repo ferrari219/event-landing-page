@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Form, Input } from 'antd';
 import UseInput from 'hook/UseInput';
 import { useDispatch, useSelector } from 'react-redux';
-import { RESET_PASSWORD_REQUEST, SEND_MAIL_REQUEST } from 'reducers/user';
+import { RESET_PASSWORD, SEND_MAIL } from 'reducers/user';
 import AdminLayout from 'components/admin/AdminLayout';
 
 const reset = () => {
@@ -20,7 +20,7 @@ const reset = () => {
   const onTempPasswordMail = useCallback(() => {
     setEmailError(false);
     dispatch({
-      type: SEND_MAIL_REQUEST,
+      type: SEND_MAIL,
       data: { email },
     });
   }, [email]);
@@ -42,7 +42,7 @@ const reset = () => {
 
   const onNewPassword = useCallback(() => {
     dispatch({
-      type: RESET_PASSWORD_REQUEST,
+      type: RESET_PASSWORD,
       data: {
         email,
         tempPassword,

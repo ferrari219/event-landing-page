@@ -18,7 +18,7 @@ const Common = ({ Component }) => {
   );
 };
 Common.proptypes = {
-  Component: PropTypes.elementType.isRequirUed,
+  Component: PropTypes.elementType.isRequired,
 };
 
 export default wrapper.withRedux(Common);

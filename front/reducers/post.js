@@ -1,4 +1,5 @@
-import produce from 'immer';
+import { createSlice } from '@reduxjs/toolkit';
+import { ADD_POST, LOAD_POSTS, UPLOAD_IMAGES } from 'actions/post';
 
 export const initialState = {
   loadPostsLoading: false, //로드
@@ -18,73 +19,62 @@ export const initialState = {
   company: 'OO', //회사명
 };
 
-export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
-export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
-export const LOAD_POSTS_FAILURE = 'LOAD_POSTS_FAILURE';
+const postSlice = createSlice({
+  name: 'post',
+  initialState,
+  reducers: {
+    REMOVE_IMAGE(state, action) {
+      state.imagePaths = state.imagePaths.filter(
+        (v, i) => i !== action.payload
+      );
+    },
+  },
+  extraReducers: (builder) =>
+    builder
+      .addCase(LOAD_POSTS.pending, (state) => {
+        state.loadPostsLoading = true;
+        state.loadPostsDone = false;
+        state.loadPostsError = null;
+      })
+      .addCase(LOAD_POSTS.fulfilled, (state) => {
+        state.loadPostsLoading = false;
+        state.loadPostsDone = true;
+        state.mainPosts.concat(action.payload);
+      })
+      .addCase(LOAD_POSTS.rejected, (state) => {
+        state.loadPostsLoading = false;
+        state.loadPostsError = action.payload;
+      })
+      .addCase(ADD_POST.pending, (state) => {
+        state.addPostLoading = true;
+        state.addPostDone = false;
+        state.addPostError = null;
+      })
+      .addCase(ADD_POST.fulfilled, (state) => {
+        state.addPostLoading = false;
+        state.addPostDone = true;
+        state.mainPosts.unshift(action.payload);
+        state.imagePaths = [];
+      })
+      .addCase(ADD_POST.rejected, (state) => {
+        state.addPostLoading = false;
+        state.addPostError = action.payload;
+      })
+      .addCase(UPLOAD_IMAGES.pending, (state) => {
+        state.uploadImagesLoading = true;
+        state.uploadImagesDone = false;
+        state.uploadImagesError = null;
+      })
+      .addCase(UPLOAD_IMAGES.fulfilled, (state) => {
+        state.uploadImagesLoading = false;
+        state.uploadImagesDone = true;
+        state.imagePaths = action.payload;
+      })
+      .addCase(UPLOAD_IMAGES.rejected, (state) => {
+        state.uploadImagesLoading = false;
+        state.uploadImagesError = action.payload;
+      })
+      .addDefaultCase((state) => state),
+});
 
-export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
-export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
-export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
-
-export const REMOVE_IMAGE = 'REMOVE_IMAGE';
-export const UPLOAD_IMAGES_REQUEST = 'UPLOAD_IMAGES_REQUEST';
-export const UPLOAD_IMAGES_SUCCESS = 'UPLOAD_IMAGES_SUCCESS';
-export const UPLOAD_IMAGES_FAILURE = 'UPLOAD_IMAGES_FAILURE';
-
-const reducer = (state = initialState, action) => {
-  return produce(state, (draft) => {
-    switch (action.type) {
-      case REMOVE_IMAGE:
-        draft.imagePaths = draft.imagePaths.filter((v, i) => i !== action.data);
-        break;
-      case LOAD_POSTS_REQUEST:
-        draft.loadPostsLoading = true;
-        draft.loadPostsDone = false;
-        draft.loadPostsError = null;
-        break;
-      case LOAD_POSTS_SUCCESS:
-        draft.loadPostsLoading = false;
-        draft.loadPostsDone = true;
-        draft.mainPosts = draft.mainPosts.concat(action.data);
-        break;
-      case LOAD_POSTS_FAILURE:
-        draft.loadPostsLoading = false;
-        draft.loadPostsError = action.error;
-        break;
-      case ADD_POST_REQUEST:
-        draft.addPostLoading = true;
-        draft.addPostDone = false;
-        draft.addPostError = null;
-        break;
-      case ADD_POST_SUCCESS:
-        draft.addPostLoading = false;
-        draft.addPostDone = true;
-        draft.mainPosts.unshift(action.data);
-        draft.imagePaths = [];
-        break;
-      case ADD_POST_FAILURE:
-        draft.addPostLoading = false;
-        draft.addPostError = action.error;
-        break;
-      case UPLOAD_IMAGES_REQUEST:
-        draft.uploadImagesLoading = true;
-        draft.uploadImagesDone = false;
-        draft.uploadImagesError = null;
-        break;
-      case UPLOAD_IMAGES_SUCCESS:
-        draft.uploadImagesLoading = false;
-        draft.uploadImagesDone = true;
-        draft.imagePaths = action.data;
-        break;
-      case UPLOAD_IMAGES_FAILURE:
-        draft.uploadImagesLoading = false;
-        draft.uploadImagesError = action.error;
-        break;
-
-      default:
-        break;
-    }
-  });
-};
-
-export default reducer;
+export default postSlice;

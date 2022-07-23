@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { Button, Form, Input } from 'antd';
 import UseInput from 'hook/UseInput';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOG_IN_REQUEST } from 'reducers/user';
+import { LOG_IN } from 'actions/user';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -11,13 +11,12 @@ const LoginForm = () => {
   const [password, onChangePassword, setpassword] = UseInput('');
 
   const onLogin = useCallback(() => {
-    dispatch({
-      type: LOG_IN_REQUEST,
-      data: {
+    dispatch(
+      LOG_IN({
         userid,
         password,
-      },
-    });
+      })
+    );
   }, [userid, password]);
   return (
     <Form onFinish={onLogin}>

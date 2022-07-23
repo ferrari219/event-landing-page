@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AdminLayout from 'components/admin/AdminLayout';
 import LoginForm from 'components/admin/LoginForm';
 import UserProfile from 'components/admin/UserProfile';
-import { LOAD_POSTS_REQUEST } from 'reducers/post';
+import { LOAD_POSTS } from 'actions/post';
 import TableList from 'components/admin/TableList';
 
 const admin = () => {

@@ -1,16 +1,14 @@
 import React, { useEffect } from 'react';
 import { Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_POSTS_REQUEST } from 'reducers/post';
+import { LOAD_POSTS } from 'actions/post';
 
 const TableList = () => {
   const dispatch = useDispatch();
   const { mainPosts } = useSelector((state) => state.post);
   useEffect(() => {
     if (mainPosts) {
-      dispatch({
-        type: LOAD_POSTS_REQUEST,
-      });
+      dispatch(LOAD_POSTS());
     }
   }, []);
 

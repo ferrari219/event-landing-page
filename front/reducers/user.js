@@ -1,4 +1,11 @@
-import produce from 'immer';
+import { createSlice } from '@reduxjs/toolkit';
+import {
+  SIGN_UP,
+  LOG_IN,
+  LOG_OUT,
+  SEND_MAIL,
+  RESET_PASSWORD,
+} from 'actions/user';
 
 export const initialState = {
   signUpLoading: false, // 회원가입
@@ -21,100 +28,79 @@ export const initialState = {
   signUpMessage: null,
 };
 
-//action
-export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
-export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
-export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
+const userSlice = createSlice({
+  name: 'user',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(SIGN_UP.pending, (state) => {
+        state.signUpLoading = true;
+        state.signUpDone = false;
+        state.signUpError = null;
+      })
+      .addCase(SIGN_UP.fulfilled, (state) => {
+        state.signUpLoading = false;
+        state.signUpDone = true;
+      })
+      .addCase(SIGN_UP.rejected, (state) => {
+        state.signUpLoading = false;
+        state.signUpError = action.payload;
+      })
+      .addCase(LOG_IN.pending, (state) => {
+        state.logInLoading = true;
+        state.logInDone = false;
+        state.logInError = null;
+      })
+      .addCase(LOG_IN.fulfilled, (state) => {
+        state.logInLoading = false;
+        state.logInDone = true;
+      })
+      .addCase(LOG_IN.rejected, (state) => {
+        state.logInLoading = false;
+        state.logInError = action.payload;
+      })
+      .addCase(LOG_OUT.pending, (state) => {
+        state.logOutLoading = true;
+        state.logOutDone = false;
+        state.logOutError = null;
+      })
+      .addCase(LOG_OUT.fulfilled, (state) => {
+        state.logOutLoading = false;
+        state.logOutDone = true;
+      })
+      .addCase(LOG_OUT.rejected, (state) => {
+        state.logOutLoading = false;
+        state.logOutError = action.payload;
+      })
+      .addCase(SEND_MAIL.pending, (state) => {
+        state.sendMailLoading = true;
+        state.sendMailDone = false;
+        state.sendMailError = null;
+      })
+      .addCase(SEND_MAIL.fulfilled, (state) => {
+        state.sendMailLoading = false;
+        state.sendMailDone = true;
+      })
+      .addCase(SEND_MAIL.rejected, (state) => {
+        state.sendMailLoading = false;
+        state.sendMailError = action.payload;
+      })
+      .addCase(RESET_PASSWORD.pending, (state) => {
+        state.resetPasswordLoading = true;
+        state.resetPasswordDone = false;
+        state.resetPasswordError = null;
+      })
+      .addCase(RESET_PASSWORD.fulfilled, (state) => {
+        state.resetPasswordLoading = false;
+        state.resetPasswordDone = true;
+      })
+      .addCase(RESET_PASSWORD.rejected, (state) => {
+        state.resetPasswordLoading = false;
+        state.resetPasswordError = action.payload;
+      })
+      .addDefaultCase((state) => state);
+  },
+});
 
-export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
-export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
-export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
-
-export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
-export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
-export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
-
-export const SEND_MAIL_REQUEST = 'SEND_MAIL_REQUEST';
-export const SEND_MAIL_SUCCESS = 'SEND_MAIL_SUCCESS';
-export const SEND_MAIL_FAILURE = 'SEND_MAIL_FAILURE';
-
-export const RESET_PASSWORD_REQUEST = 'RESET_PASSWORD_REQUEST';
-export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
-export const RESET_PASSWORD_FAILURE = 'RESET_PASSWORD_FAILURE';
-
-const reducer = (state = initialState, action) => {
-  return produce(state, (draft) => {
-    switch (action.type) {
-      case SIGN_UP_REQUEST:
-        draft.signUpLoading = true;
-        draft.signUpDone = false;
-        draft.signUpError = null;
-        break;
-      case SIGN_UP_SUCCESS:
-        draft.signUpLoading = false;
-        draft.signUpDone = true;
-        break;
-      case SIGN_UP_FAILURE:
-        draft.signUpLoading = false;
-        draft.signUpError = action.error;
-        break;
-      case LOG_IN_REQUEST:
-        draft.logInLoading = true;
-        draft.logInDone = false;
-        draft.logInError = null;
-        break;
-      case LOG_IN_SUCCESS:
-        draft.logInLoading = false;
-        draft.logInDone = true;
-        draft.me = action.data;
-        break;
-      case LOG_IN_FAILURE:
-        draft.logInLoading = false;
-        draft.logInError = action.error;
-        break;
-      case LOG_OUT_REQUEST:
-        draft.logOutLoading = true;
-        draft.logOutDone = false;
-        draft.logOutError = null;
-        break;
-      case LOG_OUT_SUCCESS:
-        draft.logOutLoading = false;
-        draft.logOutDone = true;
-        draft.me = null;
-        break;
-      case LOG_OUT_FAILURE:
-        draft.logOutLoading = false;
-        draft.logOutError = action.error;
-        break;
-      case SEND_MAIL_REQUEST:
-        draft.sendMailLoading = true;
-        draft.sendMailDone = false;
-        draft.sendMailError = null;
-        break;
-      case SEND_MAIL_SUCCESS:
-        draft.sendMailLoading = false;
-        draft.sendMailDone = true;
-        break;
-      case SEND_MAIL_FAILURE:
-        draft.sendMailLoading = false;
-        draft.sendMailError = action.error;
-        break;
-      case RESET_PASSWORD_REQUEST:
-        draft.resetPasswordLoading = true;
-        draft.resetPasswordDone = false;
-        draft.resetPasswordError = null;
-        break;
-      case RESET_PASSWORD_SUCCESS:
-        draft.resetPasswordLoading = false;
-        draft.resetPasswordDone = true;
-        break;
-      case RESET_PASSWORD_FAILURE:
-        draft.resetPasswordLoading = false;
-        draft.resetPasswordError = action.error;
-        break;
-      default:
-        return state;
-    }
-  });
-};
-export default reducer;
+export default userSlice;
