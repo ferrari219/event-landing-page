@@ -48,7 +48,7 @@ export const SEND_MAIL = createAsyncThunk(
   'user/mail',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/user/mail', data);
+      const response = await axios.patch('/user/mail', data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

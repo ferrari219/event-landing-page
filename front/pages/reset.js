@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Form, Input } from 'antd';
 import UseInput from 'hook/UseInput';
 import { useDispatch, useSelector } from 'react-redux';
-import { RESET_PASSWORD, SEND_MAIL } from 'reducers/user';
+import { RESET_PASSWORD, SEND_MAIL } from 'actions/user';
 import AdminLayout from 'components/admin/AdminLayout';
 
 const reset = () => {

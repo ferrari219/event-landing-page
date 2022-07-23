@@ -50,7 +50,7 @@ const postSlice = createSlice({
         state.addPostDone = false;
         state.addPostError = null;
       })
-      .addCase(ADD_POST.fulfilled, (state) => {
+      .addCase(ADD_POST.fulfilled, (state, action) => {
         state.addPostLoading = false;
         state.addPostDone = true;
         state.mainPosts.unshift(action.payload);
