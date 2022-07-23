@@ -52,9 +52,10 @@ const userSlice = createSlice({
         state.logInDone = false;
         state.logInError = null;
       })
-      .addCase(LOG_IN.fulfilled, (state) => {
+      .addCase(LOG_IN.fulfilled, (state, action) => {
         state.logInLoading = false;
         state.logInDone = true;
+        state.me = action.payload;
       })
       .addCase(LOG_IN.rejected, (state, action) => {
         state.logInLoading = false;
