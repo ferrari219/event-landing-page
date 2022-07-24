@@ -35,7 +35,7 @@ export const UPLOAD_IMAGES = createAsyncThunk(
   'post/images',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.get('/post/images');
+      const response = await axios.post('/post/images');
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
