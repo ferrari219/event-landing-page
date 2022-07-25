@@ -19,7 +19,7 @@ const AdminLayout = ({ children }) => {
         items={[
           {
             label: (
-              <Link href="/">
+              <Link href={'/'}>
                 <a>행사페이지</a>
               </Link>
             ),
