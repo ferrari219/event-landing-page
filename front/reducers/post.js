@@ -39,7 +39,7 @@ const postSlice = createSlice({
       .addCase(LOAD_POSTS.fulfilled, (state, action) => {
         state.loadPostsLoading = false;
         state.loadPostsDone = true;
-        state.mainPosts.concat(action.payload);
+        state.mainPosts = state.mainPosts.concat(action.payload);
       })
       .addCase(LOAD_POSTS.rejected, (state, action) => {
         state.loadPostsLoading = false;
