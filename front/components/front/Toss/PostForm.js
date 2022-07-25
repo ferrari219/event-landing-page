@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { baseURL } from 'config/config';
+import { backURL } from 'config/config';
 import UseInput from 'hook/UseInput';
 import { ADD_POST, REMOVE_IMAGE, UPLOAD_IMAGES } from 'actions/post';
 import Terms from 'components/front/NaverExpert/common/Terms';
@@ -18,6 +18,7 @@ const PostForm = () => {
   const { imagePaths, addPostDone, addPostError } = useSelector(
     (state) => state.post
   );
+  // const { id } = useSelector((state) => state.user.me);
 
   const [applyName, onChangeApplyName, setApplyName] = UseInput('');
   const [birth, onChangeBirth, setBirth] = UseInput('');
@@ -36,8 +37,9 @@ const PostForm = () => {
   const onChangeImages = useCallback((e) => {
     console.log('images', e.target.files);
     const imageFormData = new FormData();
-    [].forEach.call(e.target.files, (f) => {
-      imageFormData.append('image', f);
+    [].forEach.call(e.target.files, (image) => {
+      imageFormData.append('image', image);
+      console.log(imageFormData);
     });
     dispatch(UPLOAD_IMAGES(imageFormData));
   }, []);
@@ -58,8 +60,8 @@ const PostForm = () => {
 
   const onSubmit = useCallback(() => {
     const formData = new FormData();
-    imagePaths.forEach((p) => {
-      formData.append('image', p);
+    imagePaths.forEach((image) => {
+      formData.append('image', image);
     });
     formData.append('key', phone);
     formData.append('applyName', applyName);
@@ -151,14 +153,15 @@ const PostForm = () => {
           </Button>
         </div>
         <div>
-          {imagePaths.map((v, i) => (
-            <div key={v}>
-              <img src={`${baseURL}/${v}`} alt={v} />
-              <div>
-                <Button onClick={onRemoveImage(i)}>제거</Button>
+          {imagePaths &&
+            imagePaths.map((v, i) => (
+              <div key={v}>
+                <img src={`${backURL}/${v}`} alt={v} />
+                <div>
+                  <Button onClick={onRemoveImage(i)}>제거</Button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
         <div className="chk">
           <Checkbox name="terms" checked={terms} onChange={onChangeTerms}>

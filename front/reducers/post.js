@@ -43,7 +43,7 @@ const postSlice = createSlice({
       })
       .addCase(LOAD_POSTS.rejected, (state, action) => {
         state.loadPostsLoading = false;
-        state.loadPostsError = action.payload;
+        state.loadPostsError = action.error.message;
       })
       .addCase(ADD_POST.pending, (state) => {
         state.addPostLoading = true;
@@ -58,21 +58,21 @@ const postSlice = createSlice({
       })
       .addCase(ADD_POST.rejected, (state, action) => {
         state.addPostLoading = false;
-        state.addPostError = action.payload;
+        state.addPostError = action.error.message;
       })
       .addCase(UPLOAD_IMAGES.pending, (state) => {
         state.uploadImagesLoading = true;
         state.uploadImagesDone = false;
         state.uploadImagesError = null;
       })
-      .addCase(UPLOAD_IMAGES.fulfilled, (state) => {
+      .addCase(UPLOAD_IMAGES.fulfilled, (state, action) => {
         state.uploadImagesLoading = false;
         state.uploadImagesDone = true;
         state.imagePaths.concat(action.payload);
       })
       .addCase(UPLOAD_IMAGES.rejected, (state, action) => {
         state.uploadImagesLoading = false;
-        state.uploadImagesError = action.payload;
+        state.uploadImagesError = action.error.message;
       })
       .addDefaultCase((state) => state),
 });
