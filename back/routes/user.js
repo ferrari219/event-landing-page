@@ -6,6 +6,7 @@ const nodemailer = require('nodemailer');
 const { User } = require('../models');
 
 const dotenv = require('dotenv');
+const { isNotLoggedIn, isLoggedIn } = require('./middleware');
 dotenv.config();
 
 const router = express.Router();
@@ -17,7 +18,7 @@ const generateRandomPassword = () => {
     .toString()
     .padStart('0', 8);
 };
-router.patch('/mail', async (req, res, next) => {
+router.patch('/mail', isNotLoggedIn, async (req, res, next) => {
   //사용자가 이메일을 입력해야 입력한 메일로 메일을 보낼 수 있음
   const { email } = await req.body;
   try {
@@ -78,7 +79,7 @@ router.patch('/mail', async (req, res, next) => {
   }
 });
 
-router.patch('/reset-password', async (req, res, next) => {
+router.patch('/reset-password', isNotLoggedIn, async (req, res, next) => {
   const { email, tempPassword, newPassword } = req.body;
   try {
     //이메일 한번 더 체크
@@ -112,7 +113,7 @@ router.patch('/reset-password', async (req, res, next) => {
 });
 
 //SignUp
-router.post('/', async (req, res, next) => {
+router.post('/', isNotLoggedIn, async (req, res, next) => {
   try {
     const exUser = await User.findOne({
       where: {
@@ -136,7 +137,7 @@ router.post('/', async (req, res, next) => {
 });
 
 //LogIn
-router.post('/login', (req, res, next) => {
+router.post('/login', isNotLoggedIn, (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) {
       console.error(err);
@@ -163,14 +164,14 @@ router.post('/login', (req, res, next) => {
 });
 
 //LogOut
-router.post('/logout', (req, res) => {
+router.post('/logout', isLoggedIn, (req, res) => {
   req.logout(() => {});
   req.session.destroy();
   res.send('ok');
 });
 
 //NewPassword
-router.patch('/reset', async (req, res, next) => {
+router.patch('/reset', isNotLoggedIn, async (req, res, next) => {
   try {
     const findEmail = await User.findOne({
       where: {

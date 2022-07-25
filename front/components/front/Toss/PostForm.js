@@ -6,10 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { backURL } from 'config/config';
 import UseInput from 'hook/UseInput';
-import { ADD_POST, REMOVE_IMAGE, UPLOAD_IMAGES } from 'actions/post';
+import { ADD_POST, UPLOAD_IMAGES } from 'actions/post';
 import Terms from 'components/front/NaverExpert/common/Terms';
 import { useMobile } from 'hook/useIsMobile';
 import theme from 'assets/styles/theme';
+import postSlice from 'reducers/post';
 
 const PostForm = () => {
   const isMobile = useMobile(false);
@@ -45,7 +46,7 @@ const PostForm = () => {
   }, []);
   const onRemoveImage = useCallback(
     (index) => () => {
-      dispatch(REMOVE_IMAGE(index));
+      dispatch(postSlice.actions.REMOVE_IMAGE(index));
     },
     []
   );
