@@ -13,7 +13,7 @@ const router = express.Router();
 
 //로그인정보 확인 LOAD_MY_INFO
 router.get('/', async (req, res, next) => {
-  console.log(req.user);
+  // console.log(req.user);
   try {
     //로그인 정보가 있다면
     if (req.user) {
@@ -187,9 +187,12 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
 
 //LogOut
 router.post('/logout', isLoggedIn, (req, res) => {
-  req.logout(() => {});
+  req.logout();
+  res.clearCookie('connect.sid', {
+    path: '/',
+  });
   req.session.destroy();
-  res.send('ok');
+  res.status(200).send('ok');
 });
 
 //NewPassword

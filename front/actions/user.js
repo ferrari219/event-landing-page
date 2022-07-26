@@ -6,20 +6,10 @@ axios.defaults.baseURL = backURL;
 axios.defaults.withCredentials = true;
 
 //로그인 정보
-export const LOAD_MY_INFO = createAsyncThunk(
-  'user/loadMyInfo',
-  async () => {
-    const response = await axios.get('/user');
-    return response.data;
-  }
-  // async (data, { rejectWithValue }) => {
-  //   try {
-
-  //   } catch (error) {
-  //     return rejectWithValue(error.response.data);
-  //   }
-  // }
-);
+export const LOAD_MY_INFO = createAsyncThunk('user/loadMyInfo', async () => {
+  const response = await axios.get('/user');
+  return response.data;
+});
 
 //회원가입
 export const SIGN_UP = createAsyncThunk(
@@ -48,17 +38,10 @@ export const LOG_IN = createAsyncThunk(
 );
 
 //로그아웃
-export const LOG_OUT = createAsyncThunk(
-  'user/logout',
-  async (data, { rejectWithValue }) => {
-    try {
-      const response = await axios.post('/user/logout', data);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
+export const LOG_OUT = createAsyncThunk('user/logout', async () => {
+  const response = await axios.post('/user/logout');
+  return response.data;
+});
 
 //임시비밀번호 메일발송
 export const SEND_MAIL = createAsyncThunk(

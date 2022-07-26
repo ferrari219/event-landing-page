@@ -87,6 +87,7 @@ const userSlice = createSlice({
       .addCase(LOG_OUT.fulfilled, (state) => {
         state.logOutLoading = false;
         state.logOutDone = true;
+        state.me = null;
       })
       .addCase(LOG_OUT.rejected, (state, action) => {
         state.logOutLoading = false;

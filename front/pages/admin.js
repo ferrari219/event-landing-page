@@ -13,9 +13,9 @@ const admin = () => {
   const { me } = useSelector((state) => state.user);
   const { mainPosts } = useSelector((state) => state.post);
 
-  useEffect(() => {
-    dispatch(LOAD_MY_INFO());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(LOAD_MY_INFO());
+  // }, []);
 
   return (
     <AdminLayout>
@@ -28,13 +28,19 @@ const admin = () => {
   );
 };
 
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   (store) =>
-//     ({ req, res, ...etc }) => {
-//       const cookie = req ? req.headers.cookie : '';
-//       axios.defaults.headers.Cookie = cookie;
-//       store.dispatch(LOAD_MY_INFO());
-//     }
-// );
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req, res, ...etc }) => {
+      const cookie = req && req.headers.cookie;
+      axios.defaults.headers.Cookie = '';
+      if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+        await store.dispatch(LOAD_MY_INFO());
+      }
+      return {
+        props: {},
+      };
+    }
+);
 
 export default admin;
