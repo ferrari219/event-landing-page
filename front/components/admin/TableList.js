@@ -1,20 +1,8 @@
 import React, { useEffect } from 'react';
 import { Table } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_POSTS } from 'actions/post';
-import wrapper from 'store/configureStore';
+import { useSelector } from 'react-redux';
 
-const TableList = () => {
-  const dispatch = useDispatch();
-  const { mainPosts } = useSelector((state) => state.post);
-  // useEffect(() => {
-  //   if (mainPosts) {
-  //     dispatch(LOAD_POSTS());
-  //   }
-  // }, []);
-
-  const dataSource = mainPosts;
-
+const TableList = ({ mainPosts }) => {
   const columns = [
     {
       title: '이름',
@@ -40,15 +28,9 @@ const TableList = () => {
 
   return (
     <>
-      <Table dataSource={dataSource} columns={columns} />
+      <Table dataSource={mainPosts} columns={columns} />
     </>
   );
 };
-
-export const getServerSideProps = wrapper.getServerSideProps(
-  async (context) => {
-    await context.store.dispatch(LOAD_POSTS());
-  }
-);
 
 export default TableList;

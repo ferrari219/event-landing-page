@@ -3,6 +3,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { backURL } from 'config/config';
 
 axios.defaults.baseURL = backURL;
+axios.defaults.withCredentials = true;
+
+//로그인 정보
+export const LOAD_MY_INFO = createAsyncThunk('user/loadMyInfo', async () => {
+  const response = await axios.get('/user');
+  return response.data;
+});
 
 //회원가입
 export const SIGN_UP = createAsyncThunk(

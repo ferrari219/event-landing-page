@@ -11,6 +11,11 @@ dotenv.config();
 
 const router = express.Router();
 
+//로그인정보 확인
+router.get('/', async (req, res, next) => {
+  console.log(req.headers);
+});
+
 //메일발송
 const generateRandomPassword = () => {
   //비밀번호 초기화

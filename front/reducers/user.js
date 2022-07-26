@@ -5,9 +5,13 @@ import {
   LOG_OUT,
   SEND_MAIL,
   RESET_PASSWORD,
+  LOAD_MY_INFO,
 } from 'actions/user';
 
 export const initialState = {
+  loadMyInfoLoading: false, // 로그인 정보 조회
+  loadMyInfoDone: false,
+  loadMyInfoError: null,
   signUpLoading: false, // 회원가입
   signUpDone: false,
   signUpError: null,
@@ -25,7 +29,7 @@ export const initialState = {
   resetPasswordError: null,
 
   me: null,
-  signUpMessage: null,
+  // signUpMessage: null,
 };
 
 const userSlice = createSlice({
@@ -34,6 +38,20 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(LOAD_MY_INFO.pending, (state) => {
+        state.loadMyInfoLoading = true;
+        state.loadMyInfoDone = false;
+        state.loadMyInfoError = null;
+      })
+      .addCase(LOAD_MY_INFO.fulfilled, (state) => {
+        state.loadMyInfoLoading = false;
+        state.loadMyInfoDone = true;
+        state.me = action.payload;
+      })
+      .addCase(LOAD_MY_INFO.rejected, (state, action) => {
+        state.loadMyInfoLoading = false;
+        state.loadMyInfoError = action.payload;
+      })
       .addCase(SIGN_UP.pending, (state) => {
         state.signUpLoading = true;
         state.signUpDone = false;

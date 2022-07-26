@@ -3,6 +3,7 @@ import axios from 'axios';
 import { backURL } from 'config/config';
 
 axios.defaults.baseURL = backURL;
+axios.defaults.withCredentials = true;
 
 //게시글 로딩
 export const LOAD_POSTS = createAsyncThunk(
