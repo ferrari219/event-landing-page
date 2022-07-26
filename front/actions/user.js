@@ -6,10 +6,20 @@ axios.defaults.baseURL = backURL;
 axios.defaults.withCredentials = true;
 
 //로그인 정보
-export const LOAD_MY_INFO = createAsyncThunk('user/loadMyInfo', async () => {
-  const response = await axios.get('/user');
-  return response.data;
-});
+export const LOAD_MY_INFO = createAsyncThunk(
+  'user/loadMyInfo',
+  async () => {
+    const response = await axios.get('/user');
+    return response.data;
+  }
+  // async (data, { rejectWithValue }) => {
+  //   try {
+
+  //   } catch (error) {
+  //     return rejectWithValue(error.response.data);
+  //   }
+  // }
+);
 
 //회원가입
 export const SIGN_UP = createAsyncThunk(

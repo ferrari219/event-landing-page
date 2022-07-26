@@ -11,9 +11,26 @@ dotenv.config();
 
 const router = express.Router();
 
-//로그인정보 확인
+//로그인정보 확인 LOAD_MY_INFO
 router.get('/', async (req, res, next) => {
-  console.log(req.headers);
+  console.log(req.user);
+  try {
+    //로그인 정보가 있다면
+    if (req.user) {
+      const user = await User.findOne({
+        where: { id: req.user.id },
+        // include: [
+        //   {
+
+        //   }
+        // ]
+      });
+      res.status(200).json(user);
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
 });
 
 //메일발송

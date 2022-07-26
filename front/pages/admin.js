@@ -14,7 +14,7 @@ const admin = () => {
   const { mainPosts } = useSelector((state) => state.post);
 
   useEffect(() => {
-    dispatch(LOAD_MY_INFO);
+    dispatch(LOAD_MY_INFO());
   }, []);
 
   return (

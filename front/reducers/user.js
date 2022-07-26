@@ -43,7 +43,7 @@ const userSlice = createSlice({
         state.loadMyInfoDone = false;
         state.loadMyInfoError = null;
       })
-      .addCase(LOAD_MY_INFO.fulfilled, (state) => {
+      .addCase(LOAD_MY_INFO.fulfilled, (state, action) => {
         state.loadMyInfoLoading = false;
         state.loadMyInfoDone = true;
         state.me = action.payload;
