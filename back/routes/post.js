@@ -31,7 +31,7 @@ const upload = multer({
 });
 
 //Apply Promotion
-router.post('/', isNotLoggedIn, upload.none(), async (req, res, next) => {
+router.post('/', upload.none(), async (req, res, next) => {
   try {
     //정보재가공
     const iYear = 40;
@@ -96,14 +96,9 @@ router.post('/', isNotLoggedIn, upload.none(), async (req, res, next) => {
   //   res.send('/post');
 });
 
-router.post(
-  '/images',
-  isNotLoggedIn,
-  upload.array('image'),
-  (req, res, next) => {
-    console.log(req.files);
-    res.json(req.files.map((v) => v.filename));
-  }
-);
+router.post('/images', upload.array('image'), (req, res, next) => {
+  console.log(req.files);
+  res.json(req.files.map((v) => v.filename));
+});
 
 module.exports = router;
