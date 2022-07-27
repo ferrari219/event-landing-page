@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Form, Input } from 'antd';
 import UseInput from 'hook/UseInput';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,6 +6,7 @@ import { LOG_IN } from 'actions/user';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const { logInError } = useSelector((state) => state.user);
   const { loginLoading } = useSelector((state) => state.user);
   const [userid, onChangeuserid, setuserid] = UseInput('admin');
   const [password, onChangePassword, setpassword] = UseInput('');
@@ -46,6 +47,7 @@ const LoginForm = () => {
           로그인
         </Button>
       </div>
+      {logInError && <div>비밀번호가 틀렸습니다.</div>}
     </Form>
   );
 };

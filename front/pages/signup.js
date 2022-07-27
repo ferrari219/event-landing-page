@@ -12,7 +12,7 @@ const signup = () => {
 
   const [userid, onChangeuserid, setuserid] = UseInput('admin');
   const [password, onChangePassword, setpassword] = UseInput('1');
-  const [email, onChangeEmail, setEmail] = UseInput('a@a.com');
+  const [email, onChangeEmail, setEmail] = UseInput('ferrari219@nate.com');
   const [passwordCheck, setPasswordCheck] = useState('1');
   const [passwordError, setPasswordError] = useState(false);
 
