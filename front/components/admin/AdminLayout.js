@@ -8,7 +8,7 @@ import Link from 'next/link';
 import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
 
-const AdminLayout = ({ children }) => {
+const AdminLayout = ({ children, loginVisible = false }) => {
   const router = useRouter();
   const { me } = useSelector((state) => state.user);
   return (
@@ -52,18 +52,41 @@ const AdminLayout = ({ children }) => {
         ]}
       />
       <Row gutter={8}>
-        <Col xs={24} md={6}>
-          {me ? <UserProfile /> : <LoginForm />}
-        </Col>
+        {loginVisible && (
+          <Col xs={24} md={6}>
+            {me ? <UserProfile /> : <LoginForm />}
+          </Col>
+        )}
         <Col xs={24} md={18}>
           {children}
         </Col>
       </Row>
+      <div>
+        <Link href={'/'}>
+          <a>행사페이지</a>
+        </Link>
+      </div>
+      <div>
+        <Link href="/admin">
+          <a>관리자페이지</a>
+        </Link>
+      </div>
+      <div>
+        <Link href="/signup">
+          <a>회원가입</a>
+        </Link>
+      </div>
+      <div>
+        <Link href="/reset">
+          <a>비밀번호 초기화</a>
+        </Link>
+      </div>
     </>
   );
 };
 AdminLayout.proptypes = {
   children: PropTypes.elementType.isRequired,
+  loginVisible: PropTypes.bool,
 };
 
 export default AdminLayout;

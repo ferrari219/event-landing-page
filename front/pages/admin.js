@@ -18,7 +18,7 @@ const admin = () => {
   // }, []);
 
   return (
-    <AdminLayout>
+    <AdminLayout loginVisible={true}>
       {me ? (
         <TableList mainPosts={mainPosts} />
       ) : (
