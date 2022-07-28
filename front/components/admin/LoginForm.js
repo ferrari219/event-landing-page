@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import UseInput from 'hook/UseInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOG_IN } from 'actions/user';
@@ -10,6 +10,12 @@ const LoginForm = () => {
   const { loginLoading } = useSelector((state) => state.user);
   const [userid, onChangeuserid, setuserid] = UseInput('admin');
   const [password, onChangePassword, setpassword] = UseInput('');
+
+  useEffect(() => {
+    if (logInError) {
+      message.warn('비밀번호가 틀렸습니다. 다시 시도해주세요');
+    }
+  }, [logInError]);
 
   const onLogin = useCallback(() => {
     dispatch(
@@ -47,7 +53,6 @@ const LoginForm = () => {
           로그인
         </Button>
       </div>
-      {logInError && <div>비밀번호가 틀렸습니다.</div>}
     </Form>
   );
 };
