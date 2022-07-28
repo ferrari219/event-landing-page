@@ -1,14 +1,15 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import UseInput from 'hook/UseInput';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { SIGN_UP } from 'actions/user';
 import AdminLayout from 'components/admin/AdminLayout';
+import Router from 'next/router';
 
 //Admin SignUp
 const signup = () => {
   const dispatch = useDispatch();
-  const { signUpError } = useSelector((state) => state.user);
+  const { signUpError, me } = useSelector((state) => state.user);
 
   const [userid, onChangeuserid, setuserid] = UseInput('admin');
   const [password, onChangePassword, setpassword] = UseInput('1');
@@ -23,6 +24,13 @@ const signup = () => {
     },
     [password, passwordCheck]
   );
+
+  useEffect(() => {
+    if (me && me.id) {
+      message.warn('로그인한 사용자는 가입하실 수 없습니다.').then();
+      Router.push('/admin').then();
+    }
+  }, [me && me.id]);
 
   const onSignUp = useCallback(() => {
     dispatch(

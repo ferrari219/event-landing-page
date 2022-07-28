@@ -104,7 +104,7 @@ const userSlice = createSlice({
       })
       .addCase(SEND_MAIL.rejected, (state, action) => {
         state.sendMailLoading = false;
-        state.sendMailError = action.payload;
+        state.sendMailError = action.error.message;
       })
       .addCase(RESET_PASSWORD.pending, (state) => {
         state.resetPasswordLoading = true;

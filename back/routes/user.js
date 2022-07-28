@@ -54,7 +54,7 @@ router.patch('/mail', isNotLoggedIn, async (req, res, next) => {
       return res.status(400).send('가입하신 이메일과 일치하지 않습니다.');
     }
     const hashedPassword = await bcrypt.hash(randomPassword, 10);
-    const user = await User.update(
+    await User.update(
       {
         password: hashedPassword,
       },
@@ -92,7 +92,7 @@ router.patch('/mail', isNotLoggedIn, async (req, res, next) => {
         console.error(error);
         next(error);
       } else {
-        return res.status(200).json({ isMailSuccessed: true });
+        return res.status(200).json('임시비밀번호 메일이 발송되었습니다.');
       }
     });
   } catch (error) {
