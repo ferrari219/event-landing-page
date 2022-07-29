@@ -9,6 +9,7 @@
 - nodemailer 적용, 관리자 페이지 임시비밀번호 발송 로직 구현
 - redux-saga => @reduxjs/toolkit으로 전환
 - react-hook-form 적용
+- antd menu 모바일에서 오류로 react-bootstrap 전환
 
 ## Pages
 

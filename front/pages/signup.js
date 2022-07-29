@@ -1,29 +1,32 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import Router from 'next/router';
 import UseInput from 'hook/UseInput';
-import { Form, Input, Button, message } from 'antd';
+import { message } from 'antd';
+import { Toast } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+
 import { SIGN_UP } from 'actions/user';
 import AdminLayout from 'components/admin/AdminLayout';
-import Router from 'next/router';
 
 //Admin SignUp
 const signup = () => {
   const dispatch = useDispatch();
   const { signUpDone, signUpError, me } = useSelector((state) => state.user);
-
-  const [userid, onChangeuserid, setuserid] = UseInput('admin');
-  const [password, onChangePassword, setpassword] = UseInput('1');
-  const [email, onChangeEmail, setEmail] = UseInput('ferrari219@nate.com');
-  const [passwordCheck, setPasswordCheck] = useState('1');
-  const [passwordError, setPasswordError] = useState(false);
-
-  const onChangePasswordCheck = useCallback(
-    (e) => {
-      setPasswordCheck(e.target.value);
-      setPasswordError(password !== e.target.value);
+  const {
+    handleSubmit,
+    register,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      userid: 'admin',
+      password: '1',
+      passwordCheck: '1',
+      email: 'ferrari219@nate.com',
     },
-    [password, passwordCheck]
-  );
+  });
 
   useEffect(() => {
     if (me && me.id) {
@@ -38,67 +41,66 @@ const signup = () => {
     }
   }, [signUpDone]);
 
-  const onSignUp = useCallback(() => {
-    dispatch(
-      SIGN_UP({
-        userid: 'admin',
-        email,
-        password,
-      })
-    );
-  }, [userid, password, email]);
-
   return (
     <AdminLayout>
-      <Form onFinish={onSignUp}>
+      <form
+        onSubmit={handleSubmit(({ email, password }) => {
+          dispatch(
+            SIGN_UP({
+              userid: 'admin',
+              email,
+              password,
+            })
+          );
+        })}
+      >
         <div>
-          <label htmlFor="user-id">관리자아이디</label>
-          <br />
-          <Input
-            name="user-id"
-            value={userid}
-            onChange={onChangeuserid}
-            required
-            readOnly
-          />
+          <label htmlFor="userid">관리자아이디</label>
+          <input id="userid" type="text" readOnly {...register('userid')} />
         </div>
         <div>관리자 아이디는 admin만 사용 가능합니다.</div>
         <div>
           <label htmlFor="password">비밀번호</label>
-          <br />
-          <Input
-            name="password"
-            value={password}
-            onChange={onChangePassword}
+          <input
+            id="password"
             type="password"
-            required
+            {...register('password', {
+              required: '비밀번호를 입력해주세요',
+              pattern: {
+                value: 1,
+              },
+            })}
           />
         </div>
+        {errors.password && <div>{errors.password?.message}</div>}
         <div>
           <label htmlFor="passwordCheck">비밀번호 한번더 입력</label>
-          <br />
-          <Input
-            name="passwordCheck"
-            value={passwordCheck}
-            onChange={onChangePasswordCheck}
+          <input
+            id="passwordCheck"
             type="password"
-            required
+            {...register('passwordCheck', {
+              required: '비밀번호를 확인해주세요',
+              validate: {
+                matchPreviousPassword: (value) => {
+                  const { password } = getValues();
+                  return password === value || '비밀번호가 일치하지 않습니다.';
+                },
+              },
+            })}
           />
         </div>
-        {passwordError && <div>비밀번호가 일치하지 않습니다.</div>}
+        {errors.passwordCheck && <div>{errors.passwordCheck?.message}</div>}
         <div>
           <label htmlFor="email">이메일</label>
           <br />
-          <Input name="email" value={email} onChange={onChangeEmail} required />
+          <input id="email" type="text" {...register('email')} />
         </div>
         {/* <div>비밀번호 분실시 이메일로 초기화 할 수 있으니 이메일을 잘 기억해두세요.</div> */}
         <div>{signUpError && signUpError}</div>
         <div>
-          <Button type="primary" htmlType="submit">
-            가입하기
-          </Button>
+          <button type="submit">가입하기</button>
         </div>
-      </Form>
+      </form>
     </AdminLayout>
   );
 };
