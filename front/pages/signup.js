@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Router from 'next/router';
-import UseInput from 'hook/UseInput';
-import { message } from 'antd';
-import { Toast } from 'react-bootstrap';
+import { Input, Button, Form, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 
 import { SIGN_UP } from 'actions/user';
 import AdminLayout from 'components/admin/AdminLayout';
@@ -17,6 +15,7 @@ const signup = () => {
     handleSubmit,
     register,
     getValues,
+    control,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -43,8 +42,8 @@ const signup = () => {
 
   return (
     <AdminLayout>
-      <form
-        onSubmit={handleSubmit(({ email, password }) => {
+      <Form
+        onFinish={handleSubmit(({ email, password }) => {
           dispatch(
             SIGN_UP({
               userid: 'admin',
@@ -56,6 +55,11 @@ const signup = () => {
       >
         <div>
           <label htmlFor="userid">관리자아이디</label>
+          <Controller
+            name="userid"
+            control={control}
+            render={({ field }) => <Input {...field} />}
+          />
           <input id="userid" type="text" readOnly {...register('userid')} />
         </div>
         <div>관리자 아이디는 admin만 사용 가능합니다.</div>
@@ -100,7 +104,7 @@ const signup = () => {
         <div>
           <button type="submit">가입하기</button>
         </div>
-      </form>
+      </Form>
     </AdminLayout>
   );
 };

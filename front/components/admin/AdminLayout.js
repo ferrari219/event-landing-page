@@ -62,7 +62,7 @@ const AdminLayout = ({ children, loginVisible = false }) => {
           {children}
         </Col>
       </Row>
-      <div>
+      {/* <div>
         <Link href={'/'}>
           <a>행사페이지</a>
         </Link>
@@ -81,7 +81,7 @@ const AdminLayout = ({ children, loginVisible = false }) => {
         <Link href="/reset">
           <a>비밀번호 초기화</a>
         </Link>
-      </div>
+      </div> */}
     </>
   );
 };
