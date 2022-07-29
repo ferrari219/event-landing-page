@@ -22,15 +22,21 @@ const LoginForm = () => {
     },
   });
 
-  const { logInError } = useSelector((state) => state.user);
-  const { loginLoading } = useSelector((state) => state.user);
+  const { logOutDone, logInError, logInLoading } = useSelector(
+    (state) => state.user
+  );
+
+  useEffect(() => {
+    if (logOutDone) {
+      message.warn('로그아웃이 완료 되었습니다.');
+    }
+  }, [logOutDone]);
 
   useEffect(() => {
     if (logInError) {
       message.warn('비밀번호가 틀렸습니다. 다시 시도해주세요');
     }
   }, [logInError]);
-
   return (
     <Form
       onFinish={handleSubmit(({ userid, password }) => {
@@ -71,7 +77,7 @@ const LoginForm = () => {
         />
       </div>
       <div>
-        <Button type="primary" htmlType="submit" loading={loginLoading}>
+        <Button type="primary" htmlType="submit" loading={logInLoading}>
           로그인
         </Button>
       </div>

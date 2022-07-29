@@ -93,10 +93,11 @@ const reset = () => {
         {errors.email && <div>{errors.email?.message}</div>}
         <div>
           <Button
-            type="primary"
-            onClick={handleSubmit(({ email }) => {
+            htmlType="button"
+            onClick={() => {
+              const { email } = getValues();
               dispatch(SEND_MAIL({ email }));
-            })}
+            }}
           >
             임시비밀번호 발송
           </Button>
