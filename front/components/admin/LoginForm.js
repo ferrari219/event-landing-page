@@ -1,15 +1,29 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Form, Input, message } from 'antd';
-import UseInput from 'hook/UseInput';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm, Controller } from 'react-hook-form';
+
+import UseInput from 'hook/UseInput';
 import { LOG_IN } from 'actions/user';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const {
+    handleSubmit,
+    register,
+    getValues,
+    control,
+    formState: { errors },
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      userid: 'admin',
+      password: '1',
+    },
+  });
+
   const { logInError } = useSelector((state) => state.user);
   const { loginLoading } = useSelector((state) => state.user);
-  const [userid, onChangeuserid, setuserid] = UseInput('admin');
-  const [password, onChangePassword, setpassword] = UseInput('');
 
   useEffect(() => {
     if (logInError) {
@@ -17,35 +31,43 @@ const LoginForm = () => {
     }
   }, [logInError]);
 
-  const onLogin = useCallback(() => {
-    dispatch(
-      LOG_IN({
-        userid,
-        password,
-      })
-    );
-  }, [userid, password]);
   return (
-    <Form onFinish={onLogin}>
+    <Form
+      onFinish={handleSubmit(({ userid, password }) => {
+        dispatch(
+          LOG_IN({
+            userid,
+            password,
+          })
+        );
+      })}
+    >
       <div>
-        <label htmlFor="user-id">관리자아이디</label>
+        <label htmlFor="userid">관리자아이디</label>
         <br />
-        <Input
-          name="user-id"
-          value={userid}
-          onChange={onChangeuserid}
-          required
+        <Controller
+          name="userid"
+          control={control}
+          render={({ field }) => (
+            <Input {...register('userid')} readOnly {...field} />
+          )}
         />
       </div>
       <div>
         <label htmlFor="password">비밀번호</label>
         <br />
-        <Input
+        <Controller
           name="password"
-          value={password}
-          onChange={onChangePassword}
-          type="password"
-          required
+          control={control}
+          render={({ field }) => (
+            <Input
+              type="password"
+              {...register('password', {
+                required: '비밀번호를 입력해주세요',
+              })}
+              {...field}
+            />
+          )}
         />
       </div>
       <div>

@@ -8,8 +8,8 @@
 - nth-child 콘솔 에러 => nth-of-type으로 해결
 - nodemailer 적용, 관리자 페이지 임시비밀번호 발송 로직 구현
 - redux-saga => @reduxjs/toolkit으로 전환
-- react-hook-form 적용
-- antd menu 모바일에서 오류로 react-bootstrap 전환
+- react-hook-form 적용 => 코드량 감소
+- antd menu 모바일에서 오류로 react, react-dom 버전 다운그레이드
 
 ## Pages
 

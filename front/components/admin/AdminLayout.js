@@ -39,7 +39,7 @@ const AdminLayout = ({ children, loginVisible = false }) => {
     {
       label: (
         <Link href="/reset">
-          <a>비밀번호 초기화</a>
+          <a>비밀번호 분실</a>
         </Link>
       ),
       key: '/reset',

@@ -1,18 +1,33 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import Router from 'next/router';
 import { Button, Form, Input, message } from 'antd';
-import UseInput from 'hook/UseInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { RESET_PASSWORD, SEND_MAIL } from 'actions/user';
+import { Controller, useForm } from 'react-hook-form';
+
+import UseInput from 'hook/UseInput';
 import AdminLayout from 'components/admin/AdminLayout';
-import Router from 'next/router';
 
 const reset = () => {
   const dispatch = useDispatch();
+  const {
+    handleSubmit,
+    control,
+    register,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      email: 'ferrari219@nate.com',
+      tempPassword: '',
+      newPassword: '1',
+      newPasswordCheck: '1',
+    },
+  });
   const { me, sendMailDone, sendMailError, resetPasswordDone } = useSelector(
     (state) => state.user
   );
-  const [email, onChangeEmail, setEmail] = UseInput('ferrari219@nate.com');
-  const [emailError, setEmailError] = useState(false);
 
   useEffect(() => {
     if (me && me.id) {
@@ -42,89 +57,116 @@ const reset = () => {
       message.warn('비밀번호가 변경되었습니다.');
     }
   }, [resetPasswordDone]);
-
-  const onTempPasswordMail = useCallback(() => {
-    setEmailError(false);
-    dispatch(SEND_MAIL({ email }));
-  }, [email]);
-
-  const [tempPassword, onChangeTempPassword] = UseInput('');
-  const [tempPasswordError, setTempPasswordError] = useState(false);
-
-  const [newPassword, onChangeNewPassword] = UseInput('');
-  const [newPasswordCheck, setNewPasswordCheck] = useState('');
-  const [newPasswordError, setNewPasswordError] = useState(false);
-
-  const onChangeNewPasswordCheck = useCallback(
-    (e) => {
-      setNewPasswordCheck(e.target.value);
-      setNewPasswordError(newPassword !== e.target.value);
-    },
-    [newPassword, newPasswordCheck]
-  );
-
-  const onNewPassword = useCallback(() => {
-    dispatch(
-      RESET_PASSWORD({
-        email,
-        tempPassword,
-        newPassword,
-      })
-    );
-  }, [email, tempPassword, newPassword]);
-
   return (
     <AdminLayout>
-      <Form onFinish={onNewPassword}>
+      <Form
+        onFinish={handleSubmit(({ email, tempPassword, newPassword }) => {
+          dispatch(
+            RESET_PASSWORD({
+              email,
+              tempPassword,
+              newPassword,
+            })
+          );
+        })}
+      >
         <div>
           <label htmlFor="email">이메일</label>
           <br />
-          <Input name="email" value={email} onChange={onChangeEmail} required />
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...register('email', {
+                  required: '가입 시 입력한 이메일을 입력하세요',
+                  pattern: {
+                    value: /\S+@\S+\.\S+/,
+                    message: '이메일 형식에 맞지 않습니다.',
+                  },
+                })}
+                {...field}
+              />
+            )}
+          />
         </div>
-        {emailError && (
-          // <div>회원가입 시 기입한 이메일과 일치하지 않습니다.</div>
-          <div>{emailError}</div>
-        )}
+        {errors.email && <div>{errors.email?.message}</div>}
         <div>
-          <Button type="primary" onClick={onTempPasswordMail}>
+          <Button
+            type="primary"
+            onClick={handleSubmit(({ email }) => {
+              dispatch(SEND_MAIL({ email }));
+            })}
+          >
             임시비밀번호 발송
           </Button>
         </div>
         <div>
           <label htmlFor="tempPassword">임시비밀번호</label>
           <br />
-          <Input
+          <Controller
             name="tempPassword"
-            value={tempPassword}
-            onChange={onChangeTempPassword}
-            type="password"
-            required
+            control={control}
+            render={({ field }) => (
+              <Input
+                type="password"
+                {...register('tempPassword', {
+                  required: '이메일로 전송받은 임시 비밀번호를 입력해주세요',
+                })}
+                {...field}
+              />
+            )}
           />
         </div>
-        {tempPasswordError && <div>임시비밀번호가 다릅니다.</div>}
+        {errors.tempPassword && <div>{errors.tempPassword?.message}</div>}
         <div>
           <label htmlFor="newPassword">새비밀번호</label>
           <br />
-          <Input
+          <Controller
             name="newPassword"
-            value={newPassword}
-            onChange={onChangeNewPassword}
-            type="password"
-            required
+            control={control}
+            render={({ field }) => (
+              <Input
+                type="password"
+                {...register('newPassword', {
+                  required: '새비밀번호를 입력해주세요',
+                  pattern: {
+                    value: 1,
+                    message: '1자리수 이상의 비밀번호를 입력해주세요.',
+                  },
+                })}
+                {...field}
+              />
+            )}
           />
         </div>
         <div>
           <label htmlFor="newPasswordCheck">새비밀번호 한번더 입력</label>
           <br />
-          <Input
+          <Controller
             name="newPasswordCheck"
-            value={newPasswordCheck}
-            onChange={onChangeNewPasswordCheck}
-            type="password"
-            required
+            control={control}
+            render={({ field }) => (
+              <Input
+                type="password"
+                {...register('newPasswordCheck', {
+                  validate: {
+                    matchPreviousPassword: (value) => {
+                      const { newPassword } = getValues();
+                      return (
+                        newPassword === value || '비밀번호가 맞지 않습니다.'
+                      );
+                    },
+                  },
+                })}
+                {...field}
+              />
+            )}
           />
         </div>
-        {newPasswordError && <div>비밀번호가 일치하지 않습니다.</div>}
+        {errors.newPasswordCheck && (
+          <div>{errors.newPasswordCheck?.message}</div>
+        )}
         <div>
           <Button type="primary" htmlType="submit">
             비밀번호 변경
