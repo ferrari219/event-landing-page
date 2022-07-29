@@ -58,51 +58,86 @@ const signup = () => {
           <Controller
             name="userid"
             control={control}
-            render={({ field }) => <Input {...field} />}
+            render={({ field }) => (
+              <Input {...register('userid')} {...field} readOnly />
+            )}
           />
-          <input id="userid" type="text" readOnly {...register('userid')} />
         </div>
         <div>관리자 아이디는 admin만 사용 가능합니다.</div>
         <div>
           <label htmlFor="password">비밀번호</label>
-          <input
-            id="password"
-            type="password"
-            {...register('password', {
-              required: '비밀번호를 입력해주세요',
-              pattern: {
-                value: 1,
-              },
-            })}
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <Input
+                type="password"
+                {...register('password', {
+                  required: '비밀번호를 입력하세요',
+                  pattern: {
+                    value: 1,
+                    message: '1글자 이상 비밀번호를 입력하세요',
+                  },
+                })}
+                {...field}
+              />
+            )}
           />
         </div>
         {errors.password && <div>{errors.password?.message}</div>}
         <div>
           <label htmlFor="passwordCheck">비밀번호 한번더 입력</label>
-          <input
-            id="passwordCheck"
-            type="password"
-            {...register('passwordCheck', {
-              required: '비밀번호를 확인해주세요',
-              validate: {
-                matchPreviousPassword: (value) => {
-                  const { password } = getValues();
-                  return password === value || '비밀번호가 일치하지 않습니다.';
-                },
-              },
-            })}
+          <Controller
+            name="passwordCheck"
+            control={control}
+            render={({ field }) => (
+              <Input
+                type="password"
+                {...register('passwordCheck', {
+                  required: '비밀번호를 한번 더 입력하세요',
+                  validate: {
+                    matchPreviousPassword: (value) => {
+                      const { password } = getValues();
+                      return (
+                        password === value || '비밀번호가 일치하지 않습니다.'
+                      );
+                    },
+                  },
+                })}
+                {...field}
+              />
+            )}
           />
         </div>
         {errors.passwordCheck && <div>{errors.passwordCheck?.message}</div>}
         <div>
           <label htmlFor="email">이메일</label>
           <br />
-          <input id="email" type="text" {...register('email')} />
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...register('email', {
+                  required:
+                    '비밀번호 분실 시 이메일로 비밀번호를 초기화할 수 있습니다.',
+                  pattern: {
+                    value: /\S+@\S+\.\S+/,
+                    message: '이메일 형식에 맞지 않습니다.',
+                  },
+                })}
+                {...field}
+              />
+            )}
+          />
         </div>
+        {errors.email && <div>{errors.email?.message}</div>}
         {/* <div>비밀번호 분실시 이메일로 초기화 할 수 있으니 이메일을 잘 기억해두세요.</div> */}
         <div>{signUpError && signUpError}</div>
         <div>
-          <button type="submit">가입하기</button>
+          <Button type="primary" htmlType="submit">
+            가입하기
+          </Button>
         </div>
       </Form>
     </AdminLayout>
