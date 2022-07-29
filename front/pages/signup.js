@@ -9,7 +9,7 @@ import Router from 'next/router';
 //Admin SignUp
 const signup = () => {
   const dispatch = useDispatch();
-  const { signUpError, me } = useSelector((state) => state.user);
+  const { signUpDone, signUpError, me } = useSelector((state) => state.user);
 
   const [userid, onChangeuserid, setuserid] = UseInput('admin');
   const [password, onChangePassword, setpassword] = UseInput('1');
@@ -31,6 +31,12 @@ const signup = () => {
       Router.push('/admin').then();
     }
   }, [me && me.id]);
+  useEffect(() => {
+    if (signUpDone) {
+      message.warn('관리자에 등록되었습니다. 메인페이지로 이동합니다.').then();
+      Router.push('/admin').then();
+    }
+  }, [signUpDone]);
 
   const onSignUp = useCallback(() => {
     dispatch(
@@ -48,7 +54,13 @@ const signup = () => {
         <div>
           <label htmlFor="user-id">관리자아이디</label>
           <br />
-          <Input name="user-id" value={userid} required readOnly />
+          <Input
+            name="user-id"
+            value={userid}
+            onChange={onChangeuserid}
+            required
+            readOnly
+          />
         </div>
         <div>관리자 아이디는 admin만 사용 가능합니다.</div>
         <div>
