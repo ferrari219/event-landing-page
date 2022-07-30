@@ -3,6 +3,7 @@ import React, { useCallback, useState, useRef, useEffect } from 'react';
 import { css } from '@emotion/react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm, Controller } from 'react-hook-form';
 
 import { backURL } from 'config/config';
 import UseInput from 'hook/UseInput';
@@ -15,6 +16,21 @@ import postSlice from 'reducers/post';
 const PostForm = () => {
   const isMobile = useMobile(false);
   const dispatch = useDispatch();
+  const {
+    handleSubmit,
+    register,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      applyName: '홍길동',
+      birth: '1983-02-02',
+      phone: '',
+      address: '',
+      content: '',
+    },
+  });
 
   const { imagePaths, addPostDone, addPostError } = useSelector(
     (state) => state.post
