@@ -6,6 +6,8 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
+const hpp = require('hpp');
+const helmet = require('helmet');
 
 const postRouter = require('./routes/post');
 const postsRouter = require('./routes/posts');
@@ -29,6 +31,8 @@ let port;
 if (process.env.NODE_ENV === 'production') {
   port = 80;
   app.use(morgan('combined'));
+  app.use(hpp());
+  app.use(helmet());
   app.use(
     cors({
       origin: 'http://land.grah.shop',
