@@ -11,8 +11,6 @@ const postRouter = require('./routes/post');
 const postsRouter = require('./routes/posts');
 const userRouter = require('./routes/user');
 
-const port = 3065;
-
 const db = require('./models');
 const passportConfig = require('./passport');
 
@@ -27,13 +25,26 @@ db.sequelize
   .catch(console.error);
 passportConfig();
 
-app.use(morgan('dev'));
-app.use(
-  cors({
-    origin: 'http://localhost:3060',
-    credentials: true,
-  })
-);
+let port;
+if (process.env.NODE_ENV === 'production') {
+  port = 80;
+  app.use(morgan('combined'));
+  app.use(
+    cors({
+      origin: 'http://land.grah.shop',
+      credentials: true,
+    })
+  );
+} else {
+  port = 3065;
+  app.use(morgan('dev'));
+  app.use(
+    cors({
+      origin: 'http://localhost:3060',
+      credentials: true,
+    })
+  );
+}
 app.use('/', express.static(path.join(__dirname, 'uploads')));
 
 app.use(express.json());
