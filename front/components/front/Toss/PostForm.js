@@ -20,15 +20,16 @@ const PostForm = () => {
     handleSubmit,
     register,
     getValues,
+    control,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
     defaultValues: {
       applyName: '홍길동',
       birth: '1983-02-02',
-      phone: '',
-      address: '',
-      content: '',
+      phone: '010-2838-1341',
+      address: '서울',
+      content: 'test',
     },
   });
 
@@ -107,52 +108,63 @@ const PostForm = () => {
 
   const markUp = (
     <div className="container">
-      <Form onFinish={onSubmit}>
+      <Form onFinish={handleSubmit(onSubmit)}>
         <div className="row">
           <label htmlFor="applyName">이름</label>
-          <Input
+          <Controller
             name="applyName"
-            value={applyName}
-            onChange={onChangeApplyName}
             placeholder="이름"
-            required
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...register('applyName', { required: '필수입력입니다.' })}
+                {...field}
+              />
+            )}
           />
         </div>
         <div className="row">
           <label htmlFor="birth">생년월일</label>
-          <Input
+          <Controller
             name="birth"
-            value={birth}
-            onChange={onChangeBirth}
             placeholder="YYYYMMDD"
-            required
+            control={control}
+            render={({ field }) => <Input {...register('birth')} {...field} />}
           />
         </div>
         <div className="row">
           <label htmlFor="phone">연락처</label>
-          <Input
+          <Controller
             name="phone"
-            value={phone}
-            onChange={onChangePhone}
             placeholder="01000000000"
-            required
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...register('phone', { required: '필수입력입니다.' })}
+                {...field}
+              />
+            )}
           />
         </div>
         <div className="row">
           <label htmlFor="address">주소</label>
-          <Input
+          <Controller
             name="address"
-            value={address}
-            onChange={onChangeAddress}
             placeholder="주소"
-            required
+            control={control}
+            render={({ field }) => (
+              <Input {...register('address')} {...field} />
+            )}
           />
         </div>
         <div className="row">
-          <Input.TextArea
-            value={content}
-            onChange={onChangeContent}
+          <Controller
+            name="content"
             placeholder="응모할 내용을 적어주세요."
+            control={control}
+            render={({ field }) => (
+              <Input.TextArea {...register('content')} {...field} />
+            )}
           />
         </div>
         <div className="row btnWrap">
