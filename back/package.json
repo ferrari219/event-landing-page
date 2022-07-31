@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon web",
-    "start": "cross-env NODE_ENV=production pm2 start web.js"
+    "start": "cross-env NODE_ENV=production node web.js"
   },
   "author": "grahams",
   "license": "ISC",
