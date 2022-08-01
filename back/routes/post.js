@@ -23,12 +23,14 @@ AWS.config.update({
   secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
   region: 'ap-northeast-2',
 });
-const upload = multerS3({
-  s3: new AWS.S3(),
-  bucket: 'landing-s3-j',
-  key(req, file, cb) {
-    cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
-  },
+const upload = multer({
+  storage: multerS3({
+    s3: new AWS.S3(),
+    bucket: 'landing-s3-j',
+    key(req, file, cb) {
+      cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
+    },
+  }),
 });
 // const upload = multer({
 //   storage: multer.diskStorage({
