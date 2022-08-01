@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
+const multerS3 = require('multer-s3');
+const AWS = require('aws-sdk');
 const path = require('path');
 const fs = require('fs');
 
@@ -16,6 +18,9 @@ try {
 }
 
 //Image
+// AWS.config.update({
+
+// })
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, done) {
