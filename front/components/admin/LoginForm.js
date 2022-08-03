@@ -34,7 +34,8 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (logInError) {
-      message.warn('비밀번호가 틀렸습니다. 다시 시도해주세요');
+      console.log(logInError);
+      // message.warn('가입되지 않았거나 비밀번호가 틀렸습니다. 다시 시도해주세요');
     }
   }, [logInError]);
   return (

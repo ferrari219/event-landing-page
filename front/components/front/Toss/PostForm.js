@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useRef, useEffect } from 'react';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 
@@ -58,15 +58,16 @@ const PostForm = () => {
     []
   );
 
-  // useEffect(() => {
-  // 	if (addPostDone) {
-  // 		setApplyName('');
-  // 		setBirth('');
-  // 		setPhone('');
-  // 		setAddress('');
-  // 		setContent('');
-  // 	}
-  // }, [addPostDone]);
+  useEffect(() => {
+    if (addPostDone) {
+      message.warn('이벤트가 응모 되었습니다.');
+    }
+  }, [addPostDone]);
+  useEffect(() => {
+    if (addPostError) {
+      message.warn(addPostError);
+    }
+  }, [addPostError]);
 
   const onSubmit = useCallback((applyName, birth, phone, address, content) => {
     const formData = new FormData();
@@ -204,7 +205,6 @@ const PostForm = () => {
         <div className="term">
           <Terms company="OO" />
         </div>
-        <div>{addPostError && addPostError}</div>
         <div className="row btnWrap">
           <Button type="primary" htmlType="submit">
             응모하기

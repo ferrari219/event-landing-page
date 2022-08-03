@@ -51,7 +51,7 @@ router.patch('/mail', isNotLoggedIn, async (req, res, next) => {
       where: { email },
     });
     if (!findEmail) {
-      return res.status(400).send('가입하신 이메일과 일치하지 않습니다.');
+      return res.status(400).json('가입하신 이메일과 일치하지 않습니다.');
     }
     const hashedPassword = await bcrypt.hash(randomPassword, 10);
     await User.update(
@@ -127,7 +127,7 @@ router.patch('/reset-password', isNotLoggedIn, async (req, res, next) => {
         },
       }
     );
-    res.status(200).send('Change Password');
+    res.status(200).json('비밀번호가 변경 되었습니다.');
   } catch (error) {
     console.error(error);
     next(error);
@@ -143,7 +143,7 @@ router.post('/', isNotLoggedIn, async (req, res, next) => {
       },
     });
     if (exUser) {
-      return res.status(403).send('이미 사용 중인 아이디입니다.');
+      return res.status(403).json('이미 가입된 아이디입니다.');
     }
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const user = await User.create({
@@ -166,7 +166,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
       return next(err);
     }
     if (info) {
-      return res.status(401).send(info.reason);
+      return res.status(401).json(info.reason);
     }
     return req.login(user, async (loginErr) => {
       //passport 에러날 경우
@@ -192,7 +192,7 @@ router.post('/logout', isLoggedIn, (req, res) => {
     path: '/',
   });
   req.session.destroy();
-  res.status(200).send('ok');
+  res.status(200).json('로그아웃 완료되었습니다.');
 });
 
 //NewPassword
@@ -204,7 +204,7 @@ router.patch('/reset', isNotLoggedIn, async (req, res, next) => {
       },
     });
     if (!findEmail) {
-      return res.status(403).send('이메일이 일치하지 않습니다.');
+      return res.status(403).json('이메일이 일치하지 않습니다.');
     }
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const user = await User.update(

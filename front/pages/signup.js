@@ -39,6 +39,9 @@ const signup = () => {
       Router.push('/admin').then();
     }
   }, [signUpDone]);
+  useEffect(() => {
+    if (signUpError) message.warn(signUpError);
+  }, [signUpError]);
 
   return (
     <AdminLayout>
@@ -133,7 +136,7 @@ const signup = () => {
         </div>
         {errors.email && <div>{errors.email?.message}</div>}
         {/* <div>비밀번호 분실시 이메일로 초기화 할 수 있으니 이메일을 잘 기억해두세요.</div> */}
-        <div>{signUpError && signUpError}</div>
+        {/* <div>{signUpError && signUpError}</div> */}
         <div>
           <Button type="primary" htmlType="submit">
             가입하기

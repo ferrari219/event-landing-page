@@ -58,7 +58,7 @@ const postSlice = createSlice({
       })
       .addCase(ADD_POST.rejected, (state, action) => {
         state.addPostLoading = false;
-        state.addPostError = action.error.message;
+        state.addPostError = action.payload;
       })
       .addCase(UPLOAD_IMAGES.pending, (state) => {
         state.uploadImagesLoading = true;
@@ -72,7 +72,7 @@ const postSlice = createSlice({
       })
       .addCase(UPLOAD_IMAGES.rejected, (state, action) => {
         state.uploadImagesLoading = false;
-        state.uploadImagesError = action.error.message;
+        state.uploadImagesError = action.payload;
       })
       .addDefaultCase((state) => state),
 });

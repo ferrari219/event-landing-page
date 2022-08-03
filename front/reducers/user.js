@@ -77,7 +77,7 @@ const userSlice = createSlice({
       })
       .addCase(LOG_IN.rejected, (state, action) => {
         state.logInLoading = false;
-        state.logInError = action.error.message;
+        state.logInError = action.payload;
       })
       .addCase(LOG_OUT.pending, (state) => {
         state.logOutLoading = true;
@@ -104,7 +104,7 @@ const userSlice = createSlice({
       })
       .addCase(SEND_MAIL.rejected, (state, action) => {
         state.sendMailLoading = false;
-        state.sendMailError = action.error.message;
+        state.sendMailError = action.payload;
       })
       .addCase(RESET_PASSWORD.pending, (state) => {
         state.resetPasswordLoading = true;
