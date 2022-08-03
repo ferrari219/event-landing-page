@@ -32,7 +32,7 @@ export const LOG_IN = createAsyncThunk(
       const response = await axios.post('/user/login', data);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.reponse.data);
+      return rejectWithValue(error.response.data);
     }
   }
 );
