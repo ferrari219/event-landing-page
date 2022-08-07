@@ -35,7 +35,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(helmet());
   app.use(
     cors({
-      origin: 'http://land.grah.shop',
+      origin: 'https://event-landing-page-theta.vercel.app',
       credentials: true,
     })
   );
