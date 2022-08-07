@@ -1,4 +1,4 @@
 const prod = process.env.NODE_ENV === 'production';
 module.exports = {
-  backURL: prod ? 'http://landapi.grah.shop' : 'http://localhost:3065',
+  backURL: prod ? 'http://api.grah.shop' : 'http://localhost:3065',
 };
