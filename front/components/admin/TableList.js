@@ -24,6 +24,11 @@ const TableList = ({ mainPosts }) => {
       dataIndex: 'address',
       key: 'address',
     },
+    {
+      title: '이미지',
+      dataIndex: 'image',
+      key: 'image',
+    },
   ];
 
   return (
