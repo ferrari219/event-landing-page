@@ -17,19 +17,19 @@ const CardList = ({ mainPosts }) => {
                 cover={Images[0] && <CardImage images={Images} />}
               >
                 <Meta
-                  title={applyName}
+                  title={
+                    <h3>
+                      {applyName}
+                      <span>{phone}</span>
+                    </h3>
+                  }
                   description={
                     <div>
-                      <dl>
-                        <dt>휴대전화:</dt>
-                        <dd>{phone}</dd>
-                        <dt>나이:</dt>
-                        <dd>{birth}</dd>
-                        <dt>주소:</dt>
+                      <ul>
+                        {/* <dd>{birth}</dd> */}
                         <dd>{address}</dd>
-                        <dt>hidden응모내용</dt>
                         <dd>{content}</dd>
-                      </dl>
+                      </ul>
                     </div>
                   }
                 />
