@@ -52,7 +52,7 @@ const AdminLayout = ({ children, loginVisible = false }) => {
         selectedKeys={router.pathname}
         items={menuItems}
       />
-      <Row gutter={8}>
+      <Row gutter={16}>
         {loginVisible && (
           <Col xs={24} md={6}>
             {me ? <UserProfile /> : <LoginForm />}

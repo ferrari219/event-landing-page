@@ -19,8 +19,8 @@ const passportConfig = require('./passport');
 dotenv.config();
 const app = express();
 db.sequelize
-  .sync({ force: true })
-  // .sync()
+  // .sync({ force: true })÷
+  .sync()
   .then(() => {
     console.log('DB연결 성공');
   })

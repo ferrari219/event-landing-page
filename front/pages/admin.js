@@ -7,6 +7,8 @@ import { LOAD_MY_INFO } from 'actions/user';
 import AdminLayout from 'components/admin/AdminLayout';
 import TableList from 'components/admin/TableList';
 import wrapper from 'store/configureStore';
+import { LOAD_POSTS } from 'actions/post';
+import CardList from 'components/admin/CardList';
 
 const admin = () => {
   const dispatch = useDispatch();
@@ -14,13 +16,16 @@ const admin = () => {
   const { mainPosts } = useSelector((state) => state.post);
 
   // useEffect(() => {
-  //   dispatch(LOAD_MY_INFO());
+  //   dispatch(LOAD_POSTS());
   // }, []);
-
+  // console.log(mainPosts);
   return (
     <AdminLayout loginVisible={true}>
       {me ? (
-        <TableList mainPosts={mainPosts} />
+        <>
+          <TableList mainPosts={mainPosts} />
+          <CardList mainPosts={mainPosts} />
+        </>
       ) : (
         <div>로그인 후 이용해주세요</div>
       )}
@@ -37,6 +42,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         axios.defaults.headers.Cookie = cookie;
         await store.dispatch(LOAD_MY_INFO());
       }
+      await store.dispatch(LOAD_POSTS());
       return {
         props: {},
       };

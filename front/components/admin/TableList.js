@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Table } from 'antd';
-import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const TableList = ({ mainPosts }) => {
   const columns = [
@@ -8,6 +8,11 @@ const TableList = ({ mainPosts }) => {
       title: '이름',
       dataIndex: 'applyName',
       key: 'applyName',
+    },
+    {
+      title: '전화번호',
+      dataIndex: 'phone',
+      key: 'phone',
     },
     {
       title: '내용',
@@ -24,11 +29,11 @@ const TableList = ({ mainPosts }) => {
       dataIndex: 'address',
       key: 'address',
     },
-    {
-      title: '이미지',
-      dataIndex: 'image',
-      key: 'image',
-    },
+    // {
+    //   title: '이미지',
+    //   dataIndex: 'Images',
+    //   key: 'Images',
+    // },
   ];
 
   return (
@@ -36,6 +41,9 @@ const TableList = ({ mainPosts }) => {
       <Table dataSource={mainPosts} columns={columns} />
     </>
   );
+};
+TableList.proptypes = {
+  mainPosts: PropTypes.arrayOf.isRequired,
 };
 
 export default TableList;
