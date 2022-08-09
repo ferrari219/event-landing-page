@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Form, Input, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
+import { css } from '@emotion/react';
 
 import UseInput from 'hook/UseInput';
 import { LOG_IN } from 'actions/user';
@@ -48,35 +49,40 @@ const LoginForm = () => {
           })
         );
       })}
+      css={loginFormStyle}
     >
-      <div>
-        <label htmlFor="userid">관리자아이디</label>
-        <br />
-        <Controller
-          name="userid"
-          control={control}
-          render={({ field }) => (
-            <Input {...register('userid')} readOnly {...field} />
-          )}
-        />
-      </div>
-      <div>
-        <label htmlFor="password">비밀번호</label>
-        <br />
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <Input
-              type="password"
-              {...register('password', {
-                required: '비밀번호를 입력해주세요',
-              })}
-              {...field}
-            />
-          )}
-        />
-      </div>
+      <dl>
+        <dt>
+          <label htmlFor="userid">관리자아이디</label>
+        </dt>
+        <dd>
+          <Controller
+            name="userid"
+            control={control}
+            render={({ field }) => (
+              <Input {...register('userid')} readOnly {...field} />
+            )}
+          />
+        </dd>
+        <dt>
+          <label htmlFor="password">비밀번호</label>
+        </dt>
+        <dd>
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <Input
+                type="password"
+                {...register('password', {
+                  required: '비밀번호를 입력해주세요',
+                })}
+                {...field}
+              />
+            )}
+          />
+        </dd>
+      </dl>
       <div>
         <Button type="primary" htmlType="submit" loading={logInLoading}>
           로그인
@@ -85,5 +91,7 @@ const LoginForm = () => {
     </Form>
   );
 };
+
+const loginFormStyle = css``;
 
 export default LoginForm;

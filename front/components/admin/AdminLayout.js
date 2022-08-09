@@ -4,6 +4,7 @@ import { Col, Menu, Row } from 'antd';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
+import { css } from '@emotion/react';
 
 import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
@@ -39,20 +40,21 @@ const AdminLayout = ({ children, loginVisible = false }) => {
     {
       label: (
         <Link href="/reset">
-          <a>비밀번호 분실</a>
+          <a>비밀번호 초기화</a>
         </Link>
       ),
       key: '/reset',
     },
   ];
   return (
-    <>
+    <div css={layoutStyle}>
       <Menu
         mode="horizontal"
         selectedKeys={router.pathname}
         items={menuItems}
+        className="menu"
       />
-      <Row gutter={16}>
+      <Row gutter={16} className="content">
         {loginVisible && (
           <Col xs={24} md={6}>
             {me ? <UserProfile /> : <LoginForm />}
@@ -62,12 +64,28 @@ const AdminLayout = ({ children, loginVisible = false }) => {
           {children}
         </Col>
       </Row>
-    </>
+    </div>
   );
 };
 AdminLayout.proptypes = {
   children: PropTypes.elementType.isRequired,
   loginVisible: PropTypes.bool,
 };
+
+const layoutStyle = css`
+  & > .menu {
+    margin: 0 0 2rem 0;
+    display: flex;
+    flex-flow: row wrap;
+    & > li {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+  }
+  & > .content {
+    padding: 0 2rem;
+  }
+`;
 
 export default AdminLayout;
