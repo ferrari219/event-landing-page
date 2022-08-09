@@ -2,26 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { PlusOutlined } from '@ant-design/icons';
 import ImageZoom from './ImageZoom';
+import { css } from '@emotion/react';
 
 const CardImage = ({ images }) => {
   return (
     <>
-      <div>
-        <img
-          role="presentation"
-          style={{ width: '50%' }}
-          src={`${images[0].src}`}
-          alt={images[0].src}
-          // onClick={onZoom}
-        />
+      <div css={CardImageStyle}>
+        <div className="left">
+          <img
+            role="presentation"
+            src={`${images[0].src}`}
+            alt={images[0].src}
+            // onClick={onZoom}
+          />
+        </div>
         <div
+          className="right"
           role="presentation"
-          style={{
-            display: 'inline-block',
-            width: '50%',
-            textAlign: 'center',
-            verticalAlign: 'middle',
-          }}
           // onClick={onZoom}
         >
           <PlusOutlined />
@@ -37,5 +34,17 @@ const CardImage = ({ images }) => {
 CardImage.prototypes = {
   images: PropTypes.arrayOf(PropTypes.object),
 };
+
+const CardImageStyle = css`
+  display: flex;
+  flex-flow: row wrap;
+  // border: 5px solid red;
+  & > div {
+    flex: 1;
+  }
+  img {
+    width: 100%;
+  }
+`;
 
 export default CardImage;

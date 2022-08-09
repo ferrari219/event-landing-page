@@ -11,7 +11,7 @@ const CardList = ({ mainPosts }) => {
       <Row gutter={16}>
         {mainPosts.map(
           ({ id, applyName, phone, content, birth, address, Images }) => (
-            <Col span={12}>
+            <Col span={12} key={id}>
               <Card
                 hoverable
                 cover={Images[0] && <CardImage images={Images} />}
