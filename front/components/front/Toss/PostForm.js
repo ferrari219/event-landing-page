@@ -206,7 +206,7 @@ const PostForm = () => {
           <Terms company="OO" />
         </div>
         <div className="row btnWrap">
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" size="large" shape="round" htmlType="submit">
             응모하기
           </Button>
         </div>

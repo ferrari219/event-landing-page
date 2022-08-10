@@ -34,7 +34,10 @@ const ImageZoom = ({ images, onClose }) => {
         {images &&
           images.map((item) => (
             <SwiperSlide key={item.id}>
-              <img src={item.src.replace()} alt={item.src} />
+              <img
+                src={item.src.replace(/\/thumb\//, '/original/')}
+                alt={item.src}
+              />
             </SwiperSlide>
           ))}
       </Swiper>
@@ -75,12 +78,12 @@ const imgZoomStyle = css`
     .swiper-slide {
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
     }
     img {
-      width: auto;
-      height: 100%;
-      max-height: 40rem;
+      width: 100%;
+      height: auto;
+      // max-width: 40rem;
     }
   }
 `;
