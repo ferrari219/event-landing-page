@@ -54,15 +54,19 @@ const AdminLayout = ({ children, loginVisible = false }) => {
         items={menuItems}
         className="menu"
       />
-      <Row gutter={16} className="content">
-        {loginVisible && (
-          <Col xs={24} md={6}>
-            {me ? <UserProfile /> : <LoginForm />}
-          </Col>
+      <Row gutter={16} className="layoutBody">
+        {loginVisible ? (
+          <>
+            <Col xs={24} md={6}>
+              {me ? <UserProfile /> : <LoginForm />}
+            </Col>
+            <Col xs={24} md={18} className="rContent">
+              {children}
+            </Col>
+          </>
+        ) : (
+          <div className="content">{children}</div>
         )}
-        <Col xs={24} md={18}>
-          {children}
-        </Col>
       </Row>
     </div>
   );
@@ -83,8 +87,19 @@ const layoutStyle = css`
       justify-content: center;
     }
   }
-  & > .content {
+  & > .layoutBody {
     padding: 0 2rem;
+    & > .rContent {
+      // display: flex;
+      // justify-content: center;
+      min-height: calc(100vh - 4.6rem);
+      // background-color: #f0f3f8;
+    }
+    & > .content {
+      width: 100%;
+      max-width: 60rem;
+      margin: 5rem auto 0 auto;
+    }
   }
 `;
 

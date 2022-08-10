@@ -6,6 +6,7 @@ import { css } from '@emotion/react';
 
 import UseInput from 'hook/UseInput';
 import { LOG_IN } from 'actions/user';
+import { LoginOutlined } from '@ant-design/icons';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -83,8 +84,13 @@ const LoginForm = () => {
           />
         </dd>
       </dl>
-      <div>
-        <Button type="primary" htmlType="submit" loading={logInLoading}>
+      <div className="buttonWrap">
+        <Button
+          type="primary"
+          htmlType="submit"
+          loading={logInLoading}
+          icon={<LoginOutlined />}
+        >
           로그인
         </Button>
       </div>
@@ -92,6 +98,26 @@ const LoginForm = () => {
   );
 };
 
-const loginFormStyle = css``;
+const loginFormStyle = css`
+  dl {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    & dt,
+    & dd {
+      display: flex;
+      align-items: center;
+      padding: 0.2rem 0;
+    }
+  }
+  .buttonWrap {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0 0 0;
+    & button {
+      width: 100%;
+      // padding: 0.5rem 5rem;
+    }
+  }
+`;
 
 export default LoginForm;

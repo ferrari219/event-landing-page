@@ -9,6 +9,7 @@ import TableList from 'components/admin/TableList';
 import wrapper from 'store/configureStore';
 import { LOAD_POSTS } from 'actions/post';
 import CardList from 'components/admin/CardList';
+import { css } from '@emotion/react';
 
 const admin = () => {
   const dispatch = useDispatch();
@@ -27,11 +28,18 @@ const admin = () => {
           <CardList mainPosts={mainPosts} />
         </>
       ) : (
-        <div>로그인 후 이용해주세요</div>
+        <div css={notLoginStyle}>로그인 후 이용해주세요</div>
       )}
     </AdminLayout>
   );
 };
+
+const notLoginStyle = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 10rem;
+`;
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
