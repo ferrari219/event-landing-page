@@ -14,15 +14,22 @@ import CardList from 'components/admin/CardList';
 const admin = () => {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
-  const { mainPosts } = useSelector((state) => state.post);
+  const { mainPosts, hasMorePosts } = useSelector((state) => state.post);
 
   useEffect(() => {
     dispatch(LOAD_POSTS());
   }, []);
 
-  const onLoadPosts = useCallback(() => {}, []);
+  const onLoadPosts = useCallback(() => {
+    const lastId = mainPosts[mainPosts.length - 1]?.id;
+    console.log(mainPosts.length);
+    // console.log('lastId:', lastId);
+    if (hasMorePosts) {
+      dispatch(LOAD_POSTS({ lastId }));
+    }
+  }, [mainPosts, hasMorePosts]);
 
-  console.log(mainPosts);
+  // console.log(mainPosts);
   return (
     <AdminLayout loginVisible={true}>
       {me ? (
@@ -30,14 +37,16 @@ const admin = () => {
           <TableList mainPosts={mainPosts} />
           <CardList mainPosts={mainPosts} />
           <div className="buttonWrap">
-            <Button
-              type="primary"
-              shape="round"
-              size="large"
-              onClick={onLoadPosts}
-            >
-              더보기
-            </Button>
+            {hasMorePosts && (
+              <Button
+                type="primary"
+                shape="round"
+                size="large"
+                onClick={onLoadPosts}
+              >
+                더보기
+              </Button>
+            )}
           </div>
         </div>
       ) : (

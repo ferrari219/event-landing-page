@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true;
 
 //게시글 로딩
 export const LOAD_POSTS = createAsyncThunk(
-  'posts',
+  'post/loadposts',
   async (data, { rejectWithValue }) => {
     try {
       const response = await axios.get(`/posts?lastId=${data?.lastId || 0}`);

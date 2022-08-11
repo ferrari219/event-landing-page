@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Post, Image } = require('../models');
-const {} = require('sequelize');
+const { Op } = require('sequelize');
 
 //LoadPosts
 router.get('/', async (req, res, next) => {
