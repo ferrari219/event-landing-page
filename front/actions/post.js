@@ -10,7 +10,7 @@ export const LOAD_POSTS = createAsyncThunk(
   'posts',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.get('/posts');
+      const response = await axios.get(`/posts?lastId=${data?.lastId || 0}`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

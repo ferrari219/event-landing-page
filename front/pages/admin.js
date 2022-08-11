@@ -16,10 +16,10 @@ const admin = () => {
   const { me } = useSelector((state) => state.user);
   const { mainPosts } = useSelector((state) => state.post);
 
-  // useEffect(() => {
-  //   dispatch(LOAD_POSTS());
-  // }, []);
-  // console.log(mainPosts);
+  useEffect(() => {
+    dispatch(LOAD_POSTS());
+  }, []);
+  console.log(mainPosts);
   return (
     <AdminLayout loginVisible={true}>
       {me ? (
@@ -50,7 +50,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         axios.defaults.headers.Cookie = cookie;
         await store.dispatch(LOAD_MY_INFO());
       }
-      await store.dispatch(LOAD_POSTS());
+      // await store.dispatch(LOAD_POSTS());
       return {
         props: {},
       };
