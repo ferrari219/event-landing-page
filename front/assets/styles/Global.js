@@ -47,52 +47,37 @@ const Globals = () => {
           }
           @font-face {
             font-family: 'NotoSansKR';
-            src: url(https://ferrari219.github.io/lvtlinking/data/assets/fonts/NotoSansCJKkr-DemiLight.woff2)
-                format('woff2'),
-              url(https://ferrari219.github.io/lvtlinking/data/assets/fonts/NotoSansCJKkr-DemiLight.woff)
-                format('woff'),
-              url(https://ferrari219.github.io/lvtlinking/data/assets/fonts/NotoSansCJKkr-DemiLight.otf)
-                format('opentype');
+            src: url(/font/NotoSansCJKkr-DemiLight.woff2) format('woff2'),
+              url(/font/NotoSansCJKkr-DemiLight.woff) format('woff'),
+              url(/font/NotoSansCJKkr-DemiLight.otf) format('opentype');
             font-weight: 400;
           }
           @font-face {
             font-family: 'NotoSansKR';
-            src: url(https://ferrari219.github.io/lvtlinking/data/assets/fonts/NotoSansCJKkr-Medium.woff2)
-                format('woff2'),
-              url(https://ferrari219.github.io/lvtlinking/data/assets/fonts/NotoSansCJKkr-Medium.woff)
-                format('woff'),
-              url(https://ferrari219.github.io/lvtlinking/data/assets/fonts/NotoSansCJKkr-Medium.otf)
-                format('opentype');
+            src: url(/font/NotoSansCJKkr-Medium.woff2) format('woff2'),
+              url(/font/NotoSansCJKkr-Medium.woff) format('woff'),
+              url(/font/NotoSansCJKkr-Medium.otf) format('opentype');
             font-weight: 600;
           }
           @font-face {
             font-family: 'NotoSansKR';
-            src: url(https://ferrari219.github.io/lvtlinking/data/assets/fonts/NotoSansCJKkr-Bold.woff2)
-                format('woff2'),
-              url(https://ferrari219.github.io/lvtlinking/data/assets/fonts/NotoSansCJKkr-Bold.woff)
-                format('woff'),
-              url(https://ferrari219.github.io/lvtlinking/data/assets/fonts/NotoSansCJKkr-Bold.otf)
-                format('opentype');
+            src: url(/font/NotoSansCJKkr-Bold.woff2) format('woff2'),
+              url(/font/NotoSansCJKkr-Bold.woff) format('woff'),
+              url(/font/NotoSansCJKkr-Bold.otf) format('opentype');
             font-weight: 700;
           }
           @font-face {
             font-family: 'Roboto';
-            src: url(https://ferrari219.github.io/lvtlinking/data/assets/fonts/Roboto-Regular.woff2)
-                format('woff2'),
-              url(https://ferrari219.github.io/lvtlinking/data/assets/fonts/Roboto-Regular.woff)
-                format('woff'),
-              url(https://ferrari219.github.io/lvtlinking/data/assets/fonts/Roboto-Regular.eot)
-                format('embedded-opentype');
+            src: url(/font/Roboto-Regular.woff2) format('woff2'),
+              url(/font/Roboto-Regular.woff) format('woff'),
+              url(/font/Roboto-Regular.eot) format('embedded-opentype');
             font-weight: 400;
           }
           @font-face {
             font-family: 'Roboto';
-            src: url(https://ferrari219.github.io/lvtlinking/data/assets/fonts/Roboto-Bold.woff2)
-                format('woff2'),
-              url(https://ferrari219.github.io/lvtlinking/data/assets/fonts/Roboto-Bold.woff)
-                format('woff'),
-              url(https://ferrari219.github.io/lvtlinking/data/assets/fonts/Roboto-Bold.eot)
-                format('embedded-opentype');
+            src: url(/font/Roboto-Bold.woff2) format('woff2'),
+              url(/font/Roboto-Bold.woff) format('woff'),
+              url(/font/Roboto-Bold.eot) format('embedded-opentype');
             font-weight: 600;
           }
 
