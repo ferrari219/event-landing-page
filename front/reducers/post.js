@@ -15,6 +15,7 @@ export const initialState = {
   applyData: null,
   mainPosts: [],
   imagePaths: [],
+  hasMorePosts: true,
 
   company: 'OO', //회사명
 };
@@ -40,6 +41,7 @@ const postSlice = createSlice({
         state.loadPostsLoading = false;
         state.loadPostsDone = true;
         state.mainPosts = state.mainPosts.concat(action.payload);
+        state.hasMorePosts = action.payload.length === 2;
       })
       .addCase(LOAD_POSTS.rejected, (state, action) => {
         state.loadPostsLoading = false;
