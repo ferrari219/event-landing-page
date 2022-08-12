@@ -10,6 +10,7 @@ const Globals = () => {
           overflow-x: hidden;
           display: block;
           font-size: 62.5% !important;
+          word-wrap: break-word;
           box-sizing: border-box;
           * {
             box-sizing: inherit;
@@ -24,19 +25,31 @@ const Globals = () => {
         body {
           margin: 0;
           padding: 0;
+          border: 0;
           * {
             margin: 0;
             padding: 0;
+            border: 0;
           }
           a {
             text-decoration: none;
             color: inherit;
+          }
+          ol,
+          ul,
+          li {
+            list-style: none;
+          }
+          table {
+            border-collapse: collapse;
+            border-spacing: 0;
           }
           /*******************************************************************
 			font
 			********************************************************************/
           font-family: Roboto, AppleSDGothicNeo-Regular, NotoSansKR, 'Noto+Sans',
             'Malgun Gothic', '맑은 고딕', sans-serif;
+          -webkit-font-smoothing: antialiased;
           font-size: 1.8rem;
           line-height: 1.5;
           letter-spacing: -0.08rem;
