@@ -10,6 +10,7 @@
 - redux-saga => @reduxjs/toolkit으로 전환
 - react-hook-form 적용 => 코드량 감소
 - antd menu 모바일에서 오류로 react, react-dom 버전 다운그레이드
+- admin list pagination 처리
 
 ## Pages
 
@@ -23,11 +24,13 @@
 - [x] next.js
 - [x] @reduxjs/toolkit
 - [x] axios
-- [x] swiper
-- [x] emotion
+- [x] swiper.js
+- [x] emotion.js
 - [x] react-responsive
 - [x] react-hook-form
 - [x] sequelize
+- [x] express
 - [x] mysql2
-- [x] multer
+- [x] multerS3
 - [x] nodemailer
+- [x] aws-sdk
