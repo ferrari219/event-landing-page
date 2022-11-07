@@ -18,34 +18,34 @@ try {
 }
 
 //Image
-AWS.config.update({
-  accessKeyId: process.env.S3_ACCESS_KEY_ID,
-  secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
-  region: 'ap-northeast-2',
-});
-const upload = multer({
-  storage: multerS3({
-    s3: new AWS.S3(),
-    bucket: 'landing-s3-j',
-    key(req, file, cb) {
-      cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
-    },
-  }),
-  limits: { fileSize: 20 * 1024 * 1024 },
-});
+// AWS.config.update({
+//   accessKeyId: process.env.S3_ACCESS_KEY_ID,
+//   secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+//   region: 'ap-northeast-2',
+// });
 // const upload = multer({
-//   storage: multer.diskStorage({
-//     destination(req, file, done) {
-//       done(null, 'uploads');
-//     },
-//     filename(req, file, done) {
-//       const ext = path.extname(file.originalname);
-//       const basename = path.basename(file.originalname, ext);
-//       done(null, basename + '_' + new Date().getTime() + ext);
+//   storage: multerS3({
+//     s3: new AWS.S3(),
+//     bucket: 'landing-s3-j',
+//     key(req, file, cb) {
+//       cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
 //     },
 //   }),
 //   limits: { fileSize: 20 * 1024 * 1024 },
 // });
+const upload = multer({
+  storage: multer.diskStorage({
+    destination(req, file, done) {
+      done(null, 'uploads');
+    },
+    filename(req, file, done) {
+      const ext = path.extname(file.originalname);
+      const basename = path.basename(file.originalname, ext);
+      done(null, basename + '_' + new Date().getTime() + ext);
+    },
+  }),
+  limits: { fileSize: 20 * 1024 * 1024 },
+});
 
 //Apply Promotion
 router.post('/', upload.none(), async (req, res, next) => {
@@ -115,11 +115,11 @@ router.post('/', upload.none(), async (req, res, next) => {
 
 router.post('/images', upload.array('image'), (req, res, next) => {
   console.log(req.files);
-  // res.json(req.files.map((v) => v.filename));
-  res.json(
-    // req.files.map((v) => v.location)
-    req.files.map((v) => v.location.replace(/\/original\//, '/thumb/')) //lambda thumb
-  ); //s3
+  res.json(req.files.map((v) => v.filename));
+  // res.json(
+  //   // req.files.map((v) => v.location)
+  //   req.files.map((v) => v.location.replace(/\/original\//, '/thumb/')) //lambda thumb
+  // ); //s3
 });
 
 module.exports = router;
